@@ -5,9 +5,9 @@ import { AppContainer } from 'react-hot-loader';
 import { HashRouter } from 'react-router-dom';
 import {createStore} from 'redux';
 import settleSheetReducer from './reducers/settle-sheet-reducer';
+import { Provider } from 'react-redux';
 
 const store = createStore(settleSheetReducer);
-
 
 const render = (Component) => {
   ReactDOM.render(
