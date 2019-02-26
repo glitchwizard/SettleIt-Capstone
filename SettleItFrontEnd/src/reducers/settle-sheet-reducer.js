@@ -1,11 +1,11 @@
 export default (state = {}, action) => {
   switch (action.type) {
-  case 'ADD_NEW_SETTLESHEET':
-    const { bandNames, dateOpened, id } = action;
+  case 'ADD_TICKET':
+    const { bandNames, dateSettleSheetCreated, id } = action;
     let newState = Object.assign({}, state, {
       [id]: {
         bandNames: bandNames,
-        dateOpened: dateOpened,
+        dateSettleSheetCreated: dateSettleSheetCreated,
         dateOfShow: dateOfShow,
         id: id
       }
