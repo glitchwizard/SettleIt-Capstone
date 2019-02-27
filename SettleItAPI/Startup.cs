@@ -36,7 +36,9 @@ namespace SettleItAPI
         app.UseDeveloperExceptionPage();
       }
 
-      app.UseCors(builder => builder.Wi)
+      app.UseCors(builder => 
+      builder.WithOrigins("http://localhost:8080")
+      );
 
       app.UseMvc();
     }

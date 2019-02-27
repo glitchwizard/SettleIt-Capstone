@@ -15,11 +15,11 @@ class App extends React.Component {
   getBandFromLocalAPI(){
     console.log('Things are happening!');
     fetch('http://localhost:5000/api/values', {mode: "cors"})
-      .then(response => response)
+      .then(response => {response.json()})
       .then(
         (result) => {
           console.log('result');
-          console.log(result);
+          console.log(result.json());
         },
         (error) => {
           console.log(error);
