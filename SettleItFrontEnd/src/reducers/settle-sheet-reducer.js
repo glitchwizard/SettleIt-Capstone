@@ -10,15 +10,6 @@ export default (state = {}, action) => {
         id: id
       }
     });
-    let newState = {
-      ...state,
-      [id]: {
-        bandNames: bandNames,
-        dateSettleSheetCreated: dateSettleSheetCreated,
-        dateOfShow: dateOfShow,
-        id: id
-      }
-    }
     return newState;
   default:
     return state;
