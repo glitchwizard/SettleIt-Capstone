@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SettleItAPI.Controllers
@@ -14,7 +11,7 @@ namespace SettleItAPI.Controllers
     [HttpGet]
     public ActionResult<IEnumerable<string>> Get()
     {
-      return new string[] { "value1", "value2" };
+      return new string[] { "bandName: Target for Tomorrow", "bandName2: pseudoboss", "bandName3: Blue Ember" };
     }
 
     // GET api/values/5

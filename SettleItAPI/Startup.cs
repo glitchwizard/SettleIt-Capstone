@@ -25,6 +25,7 @@ namespace SettleItAPI
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+      services.AddCors(); 
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,6 +35,10 @@ namespace SettleItAPI
       {
         app.UseDeveloperExceptionPage();
       }
+
+      app.UseCors(builder => 
+      builder.WithOrigins("http://localhost:8080")
+      );
 
       app.UseMvc();
     }
