@@ -1,5 +1,5 @@
 import React from 'react';
-import Login from './Login';
+import { connect } from 'react-redux';
 
 
 
@@ -14,12 +14,14 @@ class App extends React.Component {
 
   getBandFromLocalAPI(){
     console.log('Things are happening!');
-    fetch('http://localhost:5000/api/values', {mode: "cors"})
-      .then(response => {response.json()})
+  fetch('http://localhost:5000/api/values'  )
       .then(
         (result) => {
           console.log('result');
+          console.log(result);
+          console.log('result.json()');
           console.log(result.json());
+          
         },
         (error) => {
           console.log(error);
@@ -47,4 +49,4 @@ class App extends React.Component {
 }
 
 
-export default App;
+export default connect()(App);

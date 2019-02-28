@@ -11,7 +11,6 @@ namespace SettleItAPI.Controllers
     [HttpGet]
     public ActionResult<IEnumerable<string>> Get()
     {
-
       return new string[] { "bandName: Target for Tomorrow", "bandName2: pseudoboss", "bandName3: Blue Ember" };
     }
 
