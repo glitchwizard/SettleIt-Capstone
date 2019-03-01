@@ -1,11 +1,42 @@
 import React from 'react';
+import constants from '../constants';
+import { v4 } from 'uuid';
+import {connect} from 'react-redux';
 
-function SettleSheetStartModal() {
+
+function SettleSheetStartModal(props) {
+
+  let _bandNames = null;
+  let _dateSettleSheetCreated = null;
+  let _dateOfShow = null;
+
+
+  function handleNewShowSubmission(event){
+    const { dispatch } = props;
+    event.preventDefault();
+    const action = {
+      type: constants.ADD_NEW_SETTLE_SHEET,
+      id: v4(),
+      bandNames: _bandNames,
+      dateSettleSheetCreated: _dateSettleSheetCreated,
+      dateOfShow: _dateOfShow
+    }
+
+    dispatch(action);
+    _dateOfShow = '';
+    _dateSettleSheetCreated = '';
+    _bandNames = '';
+
+  }
+
   return (
     <div className="componentStyle">
       <style jsx>{`
         .componentStyle {
-
+          border: 1px solid red;
+          position: fixed;
+          z-index: 1;
+          width: 100%;
                 }
 
         .createNewSettleSheet {
@@ -13,10 +44,6 @@ function SettleSheetStartModal() {
             display: flex;
             justify-content: center;
           }
-
-        .settleSheetButton {
-
-        }
 
         .settleSheetModal {
             position: fixed; 
@@ -54,11 +81,31 @@ function SettleSheetStartModal() {
       `}  
       </style>
       <div className="createNewSettleSheet">
-        <button id="settleSheetButton">Create Settle Sheet</button>
         <div id="settleSheetModal" className="settleSheetModal">
           <div className="modalContent">
             <span className="closeButton">&times;</span>
-            <p>Here will be a template for a modal</p>
+            Please input show info here:
+            <form onSubmit={handleNewTicketFormSubmission}><p></p>
+              <input
+                type='text'
+                id='bandNames'
+                placeholder='Band Names'
+                ref={(input) => {_bandNames = input;}} />
+              <p></p>
+              <input
+                type='date'
+                id='dateSettleSheetCreated'
+                placeholder='Date Settle Sheet created'
+                ref={() => {_dateSettleSheetCreated = new Date();}} />
+              <p></p>
+              <input
+                type='date'
+                id='dateOfShow'
+                placeholder='What date is the show?'
+                ref={(dateOfShow) => {_dateOfShow = dateOfShow;}} />
+              <p></p>
+              <button type='submit'> Ok </button>
+            </form>
 
           </div>
         </div>
@@ -67,4 +114,4 @@ function SettleSheetStartModal() {
   );
 }
 
-export default SettleSheetStartModal;
+export default connect()(SettleSheetStartModal);
