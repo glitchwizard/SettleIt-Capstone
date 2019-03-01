@@ -6,7 +6,7 @@ function SettleItButton({buttonText}) {
     <div className="componentStyle">
       <style jsx>{`
         .componentStyle {
-            /* input CSS here*/
+            
               }
         button {
         vertical-align: middle;
