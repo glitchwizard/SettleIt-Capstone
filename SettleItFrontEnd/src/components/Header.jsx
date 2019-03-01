@@ -1,5 +1,5 @@
 import React from 'react';
-import settleItLogo from '../assets/SettleItLogo-01.png'
+import settleItLogo from '../assets/SettleItLogo-01.png';
 
 function Header() {
   return (
@@ -12,7 +12,7 @@ function Header() {
         .header {
           display: flex;
           height: 4em;
-          border: 1px solid white;
+          border-bottom: 1px solid rgba(255,255,255,0.5);
           justify-content: space-around;
           align-items: center;
         }
