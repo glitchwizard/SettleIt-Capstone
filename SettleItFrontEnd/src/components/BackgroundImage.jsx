@@ -33,9 +33,9 @@ function BackgroundImage() {
         }
       `}
       </style>
-        <div className="bgImageContainer">
-          <img src={bgImage} />
-        </div>
+      <div className="bgImageContainer">
+        <img src={bgImage} />
+      </div>
     </div>
   );
 }
