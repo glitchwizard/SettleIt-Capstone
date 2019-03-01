@@ -25,7 +25,6 @@ class App extends React.Component {
         </style>
         Home Page working!
         <p />
-        <APIButton />
       </div>
     );
   }
