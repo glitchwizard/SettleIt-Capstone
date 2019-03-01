@@ -63,6 +63,7 @@ Please post issues on the [Issues section on GitHub](https://github.com/glitchwi
 ## Acknowledgments
 
 * [Adam Pritchard](https://github.com/adam-p) for his [awesome markdown cheat sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+* [Michelle Pomerantz](https://www.instagram.com/p/BuNsZtzASnB/?utm_source=ig_web_copy_link) for the awesome background photo shot
 
 
 ### License
