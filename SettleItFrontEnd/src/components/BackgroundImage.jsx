@@ -10,9 +10,10 @@ function BackgroundImage() {
         .bgImageContainerWrapper {
               height: 100vh;
               width: 100vw;
-              position: fixed;
+              position: absolute;
               overflow: hidden;
               z-index: -2;
+              top: 0px;
         }
 
         .bgImageContainer {
