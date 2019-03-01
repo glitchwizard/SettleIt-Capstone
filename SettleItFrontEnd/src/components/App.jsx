@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import APIButton from './APIButton';
 
 
 
@@ -10,24 +11,6 @@ class App extends React.Component {
 
   componentDidMount() {
     
-  }
-
-  getBandFromLocalAPI(){
-    console.log('Things are happening!');
-  fetch('http://localhost:5000/api/values'  )
-      .then(
-        (result) => {
-          console.log('result');
-          console.log(result);
-          console.log('result.json()');
-          console.log(result.json());
-          
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    console.log('other things are happening!');
   }
 
   render(){
@@ -42,7 +25,7 @@ class App extends React.Component {
         </style>
         Home Page working!
         <p />
-        <button className="getBandButton" onClick={this.getBandFromLocalAPI}>Get Band List</button>
+        <APIButton />
       </div>
     );
   }
