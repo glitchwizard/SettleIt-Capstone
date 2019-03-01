@@ -11,6 +11,8 @@ This readme is for the front end only of SettleIt, a settlement sheet (AKA settl
 A settle sheet can be as complex as what's shown below:
 <img src="src\assets\concert-promoter-settlement-sheet.png" style="width: 500px">
 
+This tool is an effort to help make it easier to generate, archive, and communicate these settle sheets for live entertainment performances.
+
 ## Stretch Goals
 * Calendar Build out to see and organize settle sheets from a calendar view
 * Organize performances by date via calendar view
