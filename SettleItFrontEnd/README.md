@@ -58,6 +58,11 @@ Please post issues on the [Issues section on GitHub](https://github.com/glitchwi
 * Node Package Manager (npm)
 * SQL
 
+## Acknowledgments
+
+* [Adam Pritchard](https://github.com/adam-p) for his [awesome markdown cheat sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+
+
 ### License
 
 Please contact Charley for License information.
