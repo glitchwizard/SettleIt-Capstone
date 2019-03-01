@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function SettleItButton({buttonText}) {
+function SettleItButton({buttonText, onClick}) {
   return (
     <div className="componentStyle">
       <style jsx>{`
@@ -27,13 +27,14 @@ function SettleItButton({buttonText}) {
         }
       `}
       </style>
-        <button>{buttonText}</button>
+      <button onClick={onClick}>{buttonText}</button>
     </div>
   );
 }
 
 SettleItButton.propTypes = {
-  buttonText: PropTypes.string
-}
+  buttonText: PropTypes.string,
+  onClick: PropTypes.func
+};
 
 export default SettleItButton;
