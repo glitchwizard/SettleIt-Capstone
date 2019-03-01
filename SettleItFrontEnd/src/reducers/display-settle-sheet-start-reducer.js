@@ -12,9 +12,9 @@ export default (state = {}, action) => {
             return newState;
 
         case constants.HIDE_SETTLE_SHEET_START_TOGGLE:
-            newState = {...state,
+            newState = Object.assign ({}, state, {
                 modalIsDisplayed: modalIsDisplayed
-            };
+            });
             return newState;
 
         default: 
