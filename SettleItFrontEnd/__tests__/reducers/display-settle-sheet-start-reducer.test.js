@@ -28,5 +28,4 @@ describe('displaySettleSheetReducer', () => {
                 modalIsDisplayed: null
             })
         })
-
 });
