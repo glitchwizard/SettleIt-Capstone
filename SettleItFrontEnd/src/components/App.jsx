@@ -4,7 +4,6 @@ import BackgroundImage from './BackgroundImage';
 import Header from './Header';
 import PropTypes from 'prop-types';
 import SettleItButton from './SettleItButton';
-import SettleSheetStartModal from './SettleSheetStartModal';
 import constants from './../constants';
 
 class App extends React.Component {
@@ -12,27 +11,33 @@ class App extends React.Component {
     super(props);
     console.log('props');
     console.log(props);
-    
     this.handleShowSettleSheetModal = this.handleShowSettleSheetModal.bind(this);
   }
-
+  
   componentDidMount() {
     
   }
+  
+  // TODO: need to finish this button below and get modal working
 
   handleShowSettleSheetModal() {
+    const { dispatch } = this.props;
     console.log('handleShowSettleSheetModal firing off');
     event.preventDefault();
-
     const action = {
-      type: constants.ADD_NEW_SETTLE_SHEET,
-      
-      showSettleSheetModal: true
+      type: constants.DISPLAY_SETTLE_SHEET_START_TOGGLE,
     };
-
     dispatch(action);
   } 
+  
+  // TODO: need to finish this button below
 
+  handlePrintState() { 
+    // console.log('');
+    // console.log('handlePrintState executing');
+    // console.log(getState());
+  }
+  
   render(){
     return (
       <div className="mainPage">
@@ -56,6 +61,8 @@ class App extends React.Component {
         </style>
         <div>
           <Header />
+          <SettleItButton buttonText="Print state to Console" onClick={this.handlePrintState} />
+
           <div className="hero">
             <BackgroundImage />
             {/* {settleSheetStartModal} */}
@@ -69,9 +76,18 @@ class App extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    showSettleSheetModal: state.showSettleSheetModal,
+    showModalToggle: state.showModalToggle
+  };
+};
+
 App.propTypes = {
-  showModal: PropTypes.string
+  showModalToggle: PropTypes.string,
+  dispatch: PropTypes.func,
+  store: PropTypes.object
 };
 
 
-export default connect()(App);
+export default connect(mapStateToProps)(App);
