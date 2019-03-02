@@ -11,7 +11,11 @@ const store = createStore(rootReducer);
 
 /*eslint-disable */
 let unsubscribe = store.subscribe(() =>
-  console.log(store.getState())
+  {
+    console.log('Current State:');
+    console.log(store.getState());
+    console.log('');
+  }
 );
 /*eslint-enable */
 
