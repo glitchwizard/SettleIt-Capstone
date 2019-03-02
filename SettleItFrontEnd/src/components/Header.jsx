@@ -1,7 +1,11 @@
 import React from 'react';
 import settleItLogo from '../assets/SettleItLogo-01.png';
+import SettleItButton from './SettleItButton';
+import {connect} from 'react-redux';
+
 
 function Header() {
+  
   return (
     <div className="componentStyle">
       <style jsx>{`
@@ -56,12 +60,10 @@ function Header() {
         <div className="bizIcon">
           <img src={settleItLogo} />
         </div>
-        <div className="buttonContainer">
-          <button>Login</button>
-        </div>
+        <SettleItButton buttonText="Login" />
       </div>
     </div>
   );
 }
 
-export default Header;
+export default connect()(Header);
