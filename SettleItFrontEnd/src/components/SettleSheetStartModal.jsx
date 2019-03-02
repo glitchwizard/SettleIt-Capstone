@@ -2,7 +2,7 @@ import React from 'react';
 import constants from '../constants';
 import { v4 } from 'uuid';
 import {connect} from 'react-redux';
-
+import PropTypes from 'prop-types';
 
 function SettleSheetStartModal(props) {
 
@@ -20,7 +20,7 @@ function SettleSheetStartModal(props) {
       bandNames: _bandNames,
       dateSettleSheetCreated: _dateSettleSheetCreated,
       dateOfShow: _dateOfShow
-    }
+    };
 
     dispatch(action);
     _dateOfShow = '';
@@ -85,7 +85,7 @@ function SettleSheetStartModal(props) {
           <div className="modalContent">
             <span className="closeButton">&times;</span>
             Please input show info here:
-            <form onSubmit={handleNewTicketFormSubmission}><p></p>
+            <form onSubmit={handleNewShowSubmission}><p></p>
               <input
                 type='text'
                 id='bandNames'
@@ -113,5 +113,9 @@ function SettleSheetStartModal(props) {
     </div>
   );
 }
+
+SettleSheetStartModal.propTypes = {
+  dispatch: PropTypes.func
+};
 
 export default connect()(SettleSheetStartModal);
