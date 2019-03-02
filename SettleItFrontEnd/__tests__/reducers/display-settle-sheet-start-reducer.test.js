@@ -20,4 +20,13 @@ describe('displaySettleSheetReducer', () => {
         })
     })
 
+        test('Should return a null value for toggle if HIDE_SETTLE_SHEET_START_TOGGLE is called', () => {
+            action = {
+                type: constants.HIDE_SETTLE_SHEET_START_TOGGLE,
+            }
+            expect(displaySettleSheetStartReducer({}, action)).toEqual({
+                modalIsDisplayed: null
+            })
+        })
+
 });
