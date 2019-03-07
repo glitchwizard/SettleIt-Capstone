@@ -1,19 +1,15 @@
-import constants from '../constants';
+import type from '../constants';
 
 export default (state = {}, action) => {
   let newState;
 
   switch (action.type) {
-  case constants.DISPLAY_SETTLE_SHEET_START_TOGGLE:
-    newState =  Object.assign({}, state, {
-      modalIsDisplayed: true
-    });
+  case type.DISPLAY_SETTLE_SHEET_START_TOGGLE:
+    newState =  Object.assign({}, state, action.payload);
     return newState;
 
-  case constants.HIDE_SETTLE_SHEET_START_TOGGLE:
-    newState = Object.assign ({}, state, {
-      modalIsDisplayed: null
-    });
+  case type.HIDE_SETTLE_SHEET_START_TOGGLE:
+    newState = Object.assign ({}, state, action.payload);
     return newState;
 
   default: 

@@ -10,9 +10,9 @@ import { Provider } from 'react-redux';
 const store = createStore(rootReducer);
 
 /*eslint-disable */
-let unsubscribe = store.subscribe(() =>
+store.subscribe(() =>
   {
-    console.log('Current State:');
+    console.log('Current State FROM SUBSCRIBE:');
     console.log(store.getState());
     console.log('');
   }

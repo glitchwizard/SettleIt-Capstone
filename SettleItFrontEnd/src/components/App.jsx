@@ -4,41 +4,41 @@ import BackgroundImage from './BackgroundImage';
 import Header from './Header';
 import PropTypes from 'prop-types';
 import SettleItButton from './SettleItButton';
-import constants from './../constants';
+import * as actions from '../actions';
 
 class App extends React.Component {
   constructor(props){
     super(props);
-    console.log('props');
-    console.log(props);
     this.handleShowSettleSheetModal = this.handleShowSettleSheetModal.bind(this);
   }
   
   componentDidMount() {
-    
+
   }
-  
-  // TODO: need to finish this button below and get modal working
 
   handleShowSettleSheetModal() {
     const { dispatch } = this.props;
-    console.log('handleShowSettleSheetModal firing off');
     event.preventDefault();
-    const action = {
-      type: constants.DISPLAY_SETTLE_SHEET_START_TOGGLE,
-    };
-    dispatch(action);
+    if (this.props.reduxState.displaySettleSheetStart.modalIsDisplayed) {
+      dispatch(actions.hideSettleSheetStart());
+    } else {
+      dispatch(actions.displaySettleSheetStart());
+    }
+
   } 
   
-  // TODO: need to finish this button below
-
-  handlePrintState() { 
-    // console.log('');
-    // console.log('handlePrintState executing');
-    // console.log(getState());
-  }
-  
   render(){
+    console.log('this.props');
+    console.log(this.props);
+    
+    let divToDisplay;
+    if (this.props.reduxState.displaySettleSheetStart.modalIsDisplayed) {
+
+      divToDisplay = <SettleItButton buttonText='Success!' />;
+    } else {
+      divToDisplay = null;
+    }
+
     return (
       <div className="mainPage">
         <style jsx>{`
@@ -66,6 +66,7 @@ class App extends React.Component {
           <div className="hero">
             <BackgroundImage />
             {/* {settleSheetStartModal} */}
+            {divToDisplay}
             <div className="SettleSheetButtonWrapper" onClick={this.handleShowSettleSheetModal}>
               <SettleItButton buttonText="Create Settle Sheet" />
             </div>
@@ -78,15 +79,13 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    showSettleSheetModal: state.showSettleSheetModal,
-    showModalToggle: state.showModalToggle
+    reduxState: state
   };
 };
 
 App.propTypes = {
-  showModalToggle: PropTypes.string,
   dispatch: PropTypes.func,
-  store: PropTypes.object
+  reduxState: PropTypes.object
 };
 
 
