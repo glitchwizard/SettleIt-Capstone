@@ -16,7 +16,7 @@ describe('displaySettleSheetReducer', () => {
       type: constants.DISPLAY_SETTLE_SHEET_START_TOGGLE,
     };
     expect (displaySettleSheetStartReducer({}, action)).toEqual({
-      modalIsDisplayed: true
+      isModalDisplayed: true
     });
   });
 
@@ -25,7 +25,7 @@ describe('displaySettleSheetReducer', () => {
       type: constants.HIDE_SETTLE_SHEET_START_TOGGLE,
     };
     expect(displaySettleSheetStartReducer({}, action)).toEqual({
-      modalIsDisplayed: null
+      isModalDisplayed: null
     });
   });
 });

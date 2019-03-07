@@ -19,7 +19,7 @@ class App extends React.Component {
   handleShowSettleSheetModal() {
     const { dispatch } = this.props;
     event.preventDefault();
-    if (this.props.reduxState.displaySettleSheetStart.modalIsDisplayed) {
+    if (this.props.reduxState.settleSheetModalVisibility.isModalDisplayed) {
       dispatch(actions.hideSettleSheetStart());
     } else {
       dispatch(actions.displaySettleSheetStart());
@@ -32,7 +32,7 @@ class App extends React.Component {
     console.log(this.props);
     
     let divToDisplay;
-    if (this.props.reduxState.displaySettleSheetStart.modalIsDisplayed) {
+    if (this.props.reduxState.settleSheetModalVisibility.isModalDisplayed) {
 
       divToDisplay = <SettleItButton buttonText='Success!' />;
     } else {
@@ -61,11 +61,8 @@ class App extends React.Component {
         </style>
         <div>
           <Header />
-          <SettleItButton buttonText="Print state to Console" onClick={this.handlePrintState} />
-
           <div className="hero">
             <BackgroundImage />
-            {/* {settleSheetStartModal} */}
             {divToDisplay}
             <div className="SettleSheetButtonWrapper" onClick={this.handleShowSettleSheetModal}>
               <SettleItButton buttonText="Create Settle Sheet" />

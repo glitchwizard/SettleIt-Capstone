@@ -4,7 +4,7 @@ import displaySettleSheetStartReducer from './display-settle-sheet-start-reducer
 
 const rootReducer = combineReducers({
   settleSheet: settleSheetReducer,
-  displaySettleSheetStart: displaySettleSheetStartReducer
+  settleSheetModalVisibility: displaySettleSheetStartReducer
 });
 
 export default rootReducer;
