@@ -11,17 +11,29 @@ class SettleSheetStartModal extends React.Component {
     this.handleHideSettleSheetModal = this.handleHideSettleSheetModal.bind(this);
   }
 
+  formatDate(inputDate) {
+    var resultDate = new Date(inputDate),
+      month = '' +  (resultDate.getMonth() + 1),
+      day = '' + resultDate.getDate(),
+      year = resultDate.getFullYear();
 
-  handleNewShowSubmission(event){
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
+  handleNewShowSubmission(event) {
     const { dispatch } = this.props;
     event.preventDefault();
     
-    this._dateSettleSheetCreated = new Date();
+    this._dateSettleSheetCreated = this.formatDate(new Date());
     
     dispatch(
       action.submitNewShow(
+        this._venueName.value,
         this._headlinerBandName.value, 
-        this._dateSettleSheetCreated.value, 
+        this._dateSettleSheetCreated, 
         this._dateOfShow.value
       )
     );
@@ -92,23 +104,25 @@ class SettleSheetStartModal extends React.Component {
             <div className="modalContent">
               <span className="closeButton" onClick={this.handleHideSettleSheetModal}>&times;</span>
             Please input show info here:
+              <hr />
               <form onSubmit={this.handleNewShowSubmission}><p></p>
+                <p>What's the name of the venue?</p>
                 <input
                   type='text'
                   id='venueName'
-                  placeholder='What venue is this happening at?'
+                  placeholder='Venue name'
                   ref={(venueName) => { this._venueName = venueName; }} />
+                <p>Who's headlining?</p>
                 <input
                   type='text'
-                  id='bandNames'
-                  placeholder='Band Names'
-                  ref={(input) => {this._headlinerBandName = input;}} />
+                  id='headlinerBandName'
+                  placeholder='Headliner name'
+                  ref={(headlinerBandName) => {this._headlinerBandName = headlinerBandName; }} />
                 <p> Date of show: </p>
                 <input
                   type='date'
                   id='dateOfShow'
-                  placeholder='What date is the show?'
-                  ref={(dateOfShow) => { this._dateOfShow = dateOfShow; }} />
+                  ref={(dateOfShow) => {this._dateOfShow = dateOfShow; }} />
                 <p></p>
                 <button type='submit'> Ok </button>
               </form>

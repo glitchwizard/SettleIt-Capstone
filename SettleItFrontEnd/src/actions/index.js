@@ -15,9 +15,10 @@ export const displaySettleSheetStart = () => ({
   }
 });
 
-export const submitNewShow = (_headlinerBandName, _dateSettleSheetCreated, _dateOfShow) => ({
+export const submitNewShow = (_venueName, _headlinerBandName, _dateSettleSheetCreated, _dateOfShow) => ({
   type: types.ADD_NEW_SETTLE_SHEET,
   id: v4(),
+  venueName: _venueName,
   headlinerBandName: _headlinerBandName,
   dateSettleSheetCreated: _dateSettleSheetCreated,
   dateOfShow: _dateOfShow
