@@ -29,9 +29,6 @@ class App extends React.Component {
   } 
   
   render(){
-    console.log('this.props');
-    console.log(this.props);
-    
     let divToDisplay;
     if (this.props.reduxState.settleSheetModalVisibility.isModalDisplayed) {
 
@@ -69,6 +66,8 @@ class App extends React.Component {
             {divToDisplay}
             <div className="SettleSheetButtonWrapper" >
               <SettleItButton buttonText="Create Settle Sheet" onClick={this.handleSettleSheetModalToggle}/>
+              <br />
+              <SettleItButton buttonText="Make API Call" />
             </div>
           </div>
         </div>
