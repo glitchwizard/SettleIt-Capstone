@@ -1,39 +1,46 @@
 import React from 'react';
-import constants from '../constants';
-import { v4 } from 'uuid';
+import * as action from './../actions';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-function SettleSheetStartModal(props) {
+class SettleSheetStartModal extends React.Component {
 
-  let _bandNames = null;
-  let _dateSettleSheetCreated = null;
-  let _dateOfShow = null;
-
-
-  function handleNewShowSubmission(event){
-    const { dispatch } = props;
-    event.preventDefault();
-    const action = {
-      type: constants.ADD_NEW_SETTLE_SHEET,
-      id: v4(),
-      bandNames: _bandNames,
-      dateSettleSheetCreated: _dateSettleSheetCreated,
-      dateOfShow: _dateOfShow
-    };
-
-    dispatch(action);
-    _dateOfShow = '';
-    _dateSettleSheetCreated = '';
-    _bandNames = '';
-
+  constructor(props){
+    super(props);
+    this.handleNewShowSubmission = this.handleNewShowSubmission.bind(this);
+    this.handleHideSettleSheetModal = this.handleHideSettleSheetModal.bind(this);
   }
 
-  return (
-    <div className="componentStyle">
-      <style jsx>{`
+
+  handleNewShowSubmission(event){
+    const { dispatch } = this.props;
+    event.preventDefault();
+    
+    this._dateSettleSheetCreated = new Date();
+    
+    dispatch(
+      action.submitNewShow(
+        this._headlinerBandName.value, 
+        this._dateSettleSheetCreated.value, 
+        this._dateOfShow.value
+      )
+    );
+    
+    this._headlinerBandName = '';
+    this._dateSettleSheetCreated = '';
+    this._dateOfShow = '';
+  }
+
+  handleHideSettleSheetModal(){
+    const {dispatch} = this.props;
+    dispatch(action.hideSettleSheetStart());
+  }
+
+  render() {
+    return (
+      <div className="componentStyle">
+        <style jsx>{`
         .componentStyle {
-          border: 1px solid red;
           position: fixed;
           z-index: 1;
           width: 100%;
@@ -79,39 +86,35 @@ function SettleSheetStartModal(props) {
           cursor: pointer;
         }
       `}  
-      </style>
-      <div className="createNewSettleSheet">
-        <div id="settleSheetModal" className="settleSheetModal">
-          <div className="modalContent">
-            <span className="closeButton">&times;</span>
+        </style>
+        <div className="createNewSettleSheet">
+          <div id="settleSheetModal" className="settleSheetModal">
+            <div className="modalContent">
+              <span className="closeButton" onClick={this.handleHideSettleSheetModal}>&times;</span>
             Please input show info here:
-            <form onSubmit={handleNewShowSubmission}><p></p>
-              <input
-                type='text'
-                id='bandNames'
-                placeholder='Band Names'
-                ref={(input) => {_bandNames = input;}} />
-              <p></p>
-              <input
-                type='date'
-                id='dateSettleSheetCreated'
-                placeholder='Date Settle Sheet created'
-                ref={() => {_dateSettleSheetCreated = new Date();}} />
-              <p></p>
-              <input
-                type='date'
-                id='dateOfShow'
-                placeholder='What date is the show?'
-                ref={(dateOfShow) => {_dateOfShow = dateOfShow;}} />
-              <p></p>
-              <button type='submit'> Ok </button>
-            </form>
+              <form onSubmit={this.handleNewShowSubmission}><p></p>
+                <input
+                  type='text'
+                  id='bandNames'
+                  placeholder='Band Names'
+                  ref={(input) => {this._headlinerBandName = input;}} />
+                <p> Date of show: </p>
+                <input
+                  type='date'
+                  id='dateOfShow'
+                  placeholder='What date is the show?'
+                  ref={(dateOfShow) => {this._dateOfShow = dateOfShow;}} />
+                <p></p>
+                <button type='submit'> Ok </button>
+              </form>
 
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+
 }
 
 SettleSheetStartModal.propTypes = {

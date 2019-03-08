@@ -5,18 +5,19 @@ import Header from './Header';
 import PropTypes from 'prop-types';
 import SettleItButton from './SettleItButton';
 import * as actions from '../actions';
+import SettleSheetStartModal from './SettleSheetStartModal';
 
 class App extends React.Component {
   constructor(props){
     super(props);
-    this.handleShowSettleSheetModal = this.handleShowSettleSheetModal.bind(this);
+    this.handleSettleSheetModalToggle = this.handleSettleSheetModalToggle.bind(this);
   }
   
   componentDidMount() {
 
   }
 
-  handleShowSettleSheetModal() {
+  handleSettleSheetModalToggle() {
     const { dispatch } = this.props;
     event.preventDefault();
     if (this.props.reduxState.settleSheetModalVisibility.isModalDisplayed) {
@@ -34,7 +35,9 @@ class App extends React.Component {
     let divToDisplay;
     if (this.props.reduxState.settleSheetModalVisibility.isModalDisplayed) {
 
-      divToDisplay = <SettleItButton buttonText='Success!' />;
+      divToDisplay = <div>
+        <SettleSheetStartModal />
+      </div>;
     } else {
       divToDisplay = null;
     }
@@ -64,8 +67,8 @@ class App extends React.Component {
           <div className="hero">
             <BackgroundImage />
             {divToDisplay}
-            <div className="SettleSheetButtonWrapper" onClick={this.handleShowSettleSheetModal}>
-              <SettleItButton buttonText="Create Settle Sheet" />
+            <div className="SettleSheetButtonWrapper" >
+              <SettleItButton buttonText="Create Settle Sheet" onClick={this.handleSettleSheetModalToggle}/>
             </div>
           </div>
         </div>
