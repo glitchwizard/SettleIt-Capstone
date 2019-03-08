@@ -1,17 +1,18 @@
 import React from 'react';
 
 function getBandFromLocalAPI(){
-    fetch('http://localhost:5000/api/values')
-        .then(
-            (result) => {
-                result.json().then(data => {
-                    console.log('data \n', data)
-                });
-            },
-            (error) => {
-                console.log(error);
-            }
-        )
+  fetch('http://localhost:5000/api/settlesheets')
+    .then(
+      (result) => {
+        result.json().then(data => {
+          console.log('data \n', data);
+          return data;
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
 }
 
 function APIButton() {
