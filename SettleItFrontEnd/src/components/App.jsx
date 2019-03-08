@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import SettleItButton from './SettleItButton';
 import * as actions from '../actions';
 import SettleSheetStartModal from './SettleSheetStartModal';
+import APIButton from './APIButton';
 
 class App extends React.Component {
   constructor(props){
@@ -67,7 +68,9 @@ class App extends React.Component {
             <div className="SettleSheetButtonWrapper" >
               <SettleItButton buttonText="Create Settle Sheet" onClick={this.handleSettleSheetModalToggle}/>
               <br />
-              <SettleItButton buttonText="Make API Call" />
+            </div>
+            <div className="SettleSheetButtonWrapper">
+              <APIButton buttonText="Make API Call" />
             </div>
           </div>
         </div>
