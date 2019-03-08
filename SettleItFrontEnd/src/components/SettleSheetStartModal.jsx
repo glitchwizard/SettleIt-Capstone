@@ -95,6 +95,11 @@ class SettleSheetStartModal extends React.Component {
               <form onSubmit={this.handleNewShowSubmission}><p></p>
                 <input
                   type='text'
+                  id='venueName'
+                  placeholder='What venue is this happening at?'
+                  ref={(venueName) => { this._venueName = venueName; }} />
+                <input
+                  type='text'
                   id='bandNames'
                   placeholder='Band Names'
                   ref={(input) => {this._headlinerBandName = input;}} />
@@ -103,7 +108,7 @@ class SettleSheetStartModal extends React.Component {
                   type='date'
                   id='dateOfShow'
                   placeholder='What date is the show?'
-                  ref={(dateOfShow) => {this._dateOfShow = dateOfShow;}} />
+                  ref={(dateOfShow) => { this._dateOfShow = dateOfShow; }} />
                 <p></p>
                 <button type='submit'> Ok </button>
               </form>
