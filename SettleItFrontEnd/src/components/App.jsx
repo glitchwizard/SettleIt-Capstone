@@ -1,52 +1,91 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
-
+import BackgroundImage from './BackgroundImage';
+import Header from './Header';
+import PropTypes from 'prop-types';
+import SettleItButton from './SettleItButton';
+import * as actions from '../actions';
+import SettleSheetStartModal from './SettleSheetStartModal';
 
 class App extends React.Component {
   constructor(props){
     super(props);
+    this.handleSettleSheetModalToggle = this.handleSettleSheetModalToggle.bind(this);
   }
-
+  
   componentDidMount() {
-    
+
   }
 
-  getBandFromLocalAPI(){
-    console.log('Things are happening!');
-  fetch('http://localhost:5000/api/values'  )
-      .then(
-        (result) => {
-          console.log('result');
-          console.log(result);
-          console.log('result.json()');
-          console.log(result.json());
-          
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    console.log('other things are happening!');
-  }
+  handleSettleSheetModalToggle() {
+    const { dispatch } = this.props;
+    event.preventDefault();
+    if (this.props.reduxState.settleSheetModalVisibility.isModalDisplayed) {
+      dispatch(actions.hideSettleSheetStart());
+    } else {
+      dispatch(actions.displaySettleSheetStart());
+    }
 
+  } 
+  
   render(){
+    let divToDisplay;
+    if (this.props.reduxState.settleSheetModalVisibility.isModalDisplayed) {
+
+      divToDisplay = <div>
+        <SettleSheetStartModal />
+      </div>;
+    } else {
+      divToDisplay = null;
+    }
+
     return (
       <div className="mainPage">
         <style jsx>{`
           .mainPage {
             font-family: "Montserrat", sans-serif;
           }
+
+          .hero {
+            display: relative;
+          } 
+
+          .SettleSheetButtonWrapper {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+          }
+
         @import url("https://fonts.googleapis.com/css?family=Montserrat");
         `}
         </style>
-        Home Page working!
-        <p />
-        <button className="getBandButton" onClick={this.getBandFromLocalAPI}>Get Band List</button>
+        <div>
+          <Header />
+          <div className="hero">
+            <BackgroundImage />
+            {divToDisplay}
+            <div className="SettleSheetButtonWrapper" >
+              <SettleItButton buttonText="Create Settle Sheet" onClick={this.handleSettleSheetModalToggle}/>
+              <br />
+              <SettleItButton buttonText="Make API Call" />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    reduxState: state
+  };
+};
 
-export default connect()(App);
+App.propTypes = {
+  dispatch: PropTypes.func,
+  reduxState: PropTypes.object
+};
+
+
+export default connect(mapStateToProps)(App);

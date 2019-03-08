@@ -1,8 +1,11 @@
+import constants from './../constants';
+
 export default (state = {}, action) => {
+  let newState;
+  const { bandNames, dateSettleSheetCreated, dateOfShow, id } = action;
   switch (action.type) {
-  case 'ADD_NEW_SETTLE_SHEET':
-    const { bandNames, dateSettleSheetCreated, dateOfShow, id } = action;
-    let newState = Object.assign({}, state, {
+  case constants.ADD_NEW_SETTLE_SHEET:
+    newState = Object.assign( {}, state, { 
       [id]: {
         bandNames: bandNames,
         dateSettleSheetCreated: dateSettleSheetCreated,
