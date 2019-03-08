@@ -1,7 +1,7 @@
 {
-  "name": "personal-portfolio",
+  "name": "SettleIt",
   "version": "1.0.0",
-  "description": "Building a help ticket queue similar to the one at Epicodus",
+  "description": "Building a tool to help entertainment venues create a settlement sheet",
   "main": "index.js",
   "scripts": {
     "test": "jest; exit 0",
@@ -12,7 +12,7 @@
     "win-lint-fix": "eslint src/** src/**/** --fix"
   },
   "author": "Charley McGowan",
-  "license": "MIT",
+  "license": "",
   "dependencies": {
     "prop-types": "^15.5.10",
     "react": "^16.8.3",
@@ -20,7 +20,8 @@
     "react-redux": "^6.0.1",
     "react-router-dom": "^4.0.0",
     "redux": "^4.0.1",
-    "styled-jsx": "^3.2.1"
+    "styled-jsx": "^3.2.1",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
