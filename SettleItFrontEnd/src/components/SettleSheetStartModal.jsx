@@ -23,18 +23,42 @@ class SettleSheetStartModal extends React.Component {
     return [year, month, day].join('-');
   }
 
+  submitShowToAPI(data) {
+    return fetch('http://localhost:5000/api/settlesheets', {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      redirect: 'follow',
+      referrer: 'no-referrer',
+      body: JSON.stringify(data),
+    })
+      .then(response => {
+        console.log(response.json());
+        response.json();
+      });
+  }
+
   handleNewShowSubmission(event) {
     const { dispatch } = this.props;
     event.preventDefault();
     
     this._dateSettleSheetCreated = this.formatDate(new Date());
-    
+
+    let data = {
+      'dateCreated': this._dateSettleSheetCreated,
+      'dateOfShow': this._dateOfShow.value,
+      'headlinerBand': this._headlinerBandName.value,
+      'venueName': this._venueName.value
+    };
+
+    debugger;
+
     dispatch(
-      action.submitNewShow(
-        this._venueName.value,
-        this._headlinerBandName.value, 
-        this._dateSettleSheetCreated, 
-        this._dateOfShow.value
+      action.submitNewShow(this.submitShowToAPI(data)
       )
     );
     
