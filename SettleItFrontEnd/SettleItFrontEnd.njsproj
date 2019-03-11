@@ -61,6 +61,7 @@
     <Compile Include="__tests__\reducers\settle-sheet-reducer.test.js" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="middleware\" />
     <Folder Include="src\" />
     <Folder Include="src\actions\" />
     <Folder Include="src\assets\" />
