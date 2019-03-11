@@ -1,19 +1,5 @@
 import React from 'react';
-
-function getBandFromLocalAPI(){
-  fetch('http://localhost:5000/api/settlesheets')
-    .then(
-      (result) => {
-        result.json().then(data => {
-          console.log('data \n', data);
-          return data;
-        });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-}
+import APItools from '../tools';
 
 function APIButton() {
   return (
@@ -24,11 +10,10 @@ function APIButton() {
                 }
             `}
       </style>
-      <button className="getBandButton" onClick={getBandFromLocalAPI}>Get Band List</button>
+      <button className="getBandButton" onClick={APItools.getBandsFromLocalAPI()}>Get Band List</button>
     </div>
   );
 }
-
 
 export default APIButton;
 

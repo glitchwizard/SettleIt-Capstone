@@ -2,6 +2,7 @@ import React from 'react';
 import * as action from './../actions';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import APItools from '../tools';
 
 class SettleSheetStartModal extends React.Component {
 
@@ -11,20 +12,20 @@ class SettleSheetStartModal extends React.Component {
     this.handleHideSettleSheetModal = this.handleHideSettleSheetModal.bind(this);
   }
 
-
-  handleNewShowSubmission(event){
+  handleNewShowSubmission(event) {
     const { dispatch } = this.props;
     event.preventDefault();
-    
-    this._dateSettleSheetCreated = new Date();
-    
-    dispatch(
-      action.submitNewShow(
-        this._headlinerBandName.value, 
-        this._dateSettleSheetCreated.value, 
-        this._dateOfShow.value
-      )
-    );
+
+    this._dateSettleSheetCreated = APItools.formatDate(new Date());
+
+    let data = {
+      'dateCreated': this._dateSettleSheetCreated,
+      'dateOfShow': this._dateOfShow.value,
+      'headlinerBand': this._headlinerBandName.value,
+      'venueName': this._venueName.value
+    };
+
+    dispatch( action.submitNewShow(data) );
     
     this._headlinerBandName = '';
     this._dateSettleSheetCreated = '';
@@ -92,18 +93,25 @@ class SettleSheetStartModal extends React.Component {
             <div className="modalContent">
               <span className="closeButton" onClick={this.handleHideSettleSheetModal}>&times;</span>
             Please input show info here:
+              <hr />
               <form onSubmit={this.handleNewShowSubmission}><p></p>
+                <p>What's the name of the venue?</p>
                 <input
                   type='text'
-                  id='bandNames'
-                  placeholder='Band Names'
-                  ref={(input) => {this._headlinerBandName = input;}} />
+                  id='venueName'
+                  placeholder='Venue name'
+                  ref={(venueName) => { this._venueName = venueName; }} />
+                <p>Who's headlining?</p>
+                <input
+                  type='text'
+                  id='headlinerBandName'
+                  placeholder='Headliner name'
+                  ref={(headlinerBandName) => {this._headlinerBandName = headlinerBandName; }} />
                 <p> Date of show: </p>
                 <input
                   type='date'
                   id='dateOfShow'
-                  placeholder='What date is the show?'
-                  ref={(dateOfShow) => {this._dateOfShow = dateOfShow;}} />
+                  ref={(dateOfShow) => {this._dateOfShow = dateOfShow; }} />
                 <p></p>
                 <button type='submit'> Ok </button>
               </form>
