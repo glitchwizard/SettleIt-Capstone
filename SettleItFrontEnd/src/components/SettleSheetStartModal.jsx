@@ -2,6 +2,7 @@ import React from 'react';
 import * as action from './../actions';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import APItools from '../tools';
 
 class SettleSheetStartModal extends React.Component {
 
@@ -11,42 +12,11 @@ class SettleSheetStartModal extends React.Component {
     this.handleHideSettleSheetModal = this.handleHideSettleSheetModal.bind(this);
   }
 
-  formatDate(inputDate) {
-    var resultDate = new Date(inputDate),
-      month = '' +  (resultDate.getMonth() + 1),
-      day = '' + resultDate.getDate(),
-      year = resultDate.getFullYear();
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    return [year, month, day].join('-');
-  }
-
-  submitShowToAPI(data) {
-    return fetch('http://localhost:5000/api/settlesheets', {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      redirect: 'follow',
-      referrer: 'no-referrer',
-      body: JSON.stringify(data),
-    })
-      .then(response => {
-        console.log(response.json());
-        response.json();
-      });
-  }
-
   handleNewShowSubmission(event) {
     const { dispatch } = this.props;
     event.preventDefault();
-    
-    this._dateSettleSheetCreated = this.formatDate(new Date());
+
+    this._dateSettleSheetCreated = APItools.formatDate(new Date());
 
     let data = {
       'dateCreated': this._dateSettleSheetCreated,
@@ -55,12 +25,7 @@ class SettleSheetStartModal extends React.Component {
       'venueName': this._venueName.value
     };
 
-    debugger;
-
-    dispatch(
-      action.submitNewShow(this.submitShowToAPI(data)
-      )
-    );
+    dispatch( action.submitNewShow(data) );
     
     this._headlinerBandName = '';
     this._dateSettleSheetCreated = '';

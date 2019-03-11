@@ -41,6 +41,9 @@
     <Content Include="template.ejs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\middleware\APImiddleware.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="src\actions\index.js" />
     <Compile Include="src\components\APIButton.jsx" />
     <Compile Include="src\components\App.jsx" />
@@ -56,12 +59,19 @@
     <Compile Include="src\reducers\display-settle-sheet-start-reducer.js" />
     <Compile Include="src\reducers\index.js" />
     <Compile Include="src\reducers\settle-sheet-reducer.js" />
+    <Compile Include="src\tools\APItools.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\tools\index.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="webpack.config.js" />
     <Compile Include="__tests__\reducers\display-settle-sheet-start-reducer.test.js" />
     <Compile Include="__tests__\reducers\settle-sheet-reducer.test.js" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="middleware\" />
+    <Folder Include="src\middleware\" />
+    <Folder Include="src\tools\" />
     <Folder Include="src\" />
     <Folder Include="src\actions\" />
     <Folder Include="src\assets\" />

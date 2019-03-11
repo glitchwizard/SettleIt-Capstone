@@ -2,18 +2,24 @@ import constants from './../constants';
 
 export default (state = {}, action) => {
   let newState;
-  const { headlinerBandName, dateSettleSheetCreated, dateOfShow, id } = action;
   switch (action.type) {
-  case constants.ADD_NEW_SETTLE_SHEET:
+    case constants.ADD_NEW_SETTLE_SHEET: {
+
+      const { venueName, headlinerBand, dateCreated, dateOfShow, settleSheetId } = action.payload;
+
     newState = Object.assign( {}, state, { 
-      [id]: {
-        headlinerName: headlinerBandName,
-        dateSettleSheetCreated: dateSettleSheetCreated,
+      [settleSheetId]: {
+        venueName: venueName,
+        headlinerBand: headlinerBand,
+        dateCreated: dateCreated,
         dateOfShow: dateOfShow,
-        id: id
+        settleSheetId: settleSheetId
       }
     });
+
     return newState;
+
+    }
   default:
     return state;
   }
