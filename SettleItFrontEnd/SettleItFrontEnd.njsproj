@@ -41,9 +41,6 @@
     <Content Include="template.ejs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\middleware\APImiddleware.js">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="src\actions\index.js" />
     <Compile Include="src\components\APIButton.jsx" />
     <Compile Include="src\components\App.jsx" />
