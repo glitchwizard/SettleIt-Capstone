@@ -26,16 +26,6 @@ class App extends React.Component {
     }
   }
 
-  handleSettleSheetDetailModalToggle() {
-    const {dispatch} = this.props;
-    event.preventDefault();
-    if (this.props.reduxState.settleSheetModalVisibility.isModalDisplayed) {
-      dispatch(action.hideSettleSheetDetails());
-    } else {
-      dispatch(action.displaySettleSheetDetails());
-    }
-  }
-
   render() {
     let divToDisplay;
     if (this.props.reduxState.settleSheetModalVisibility.isModalDisplayed) {

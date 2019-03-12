@@ -12,8 +12,9 @@ class SettleSheetDetailsModal extends React.Component {
   }
 
   handleOnSubmit(){
-    console.log('submit')
+    console.log('submit');
     this.handleEditSettleSheetInformation();
+    this.clearSettleSheetDetailFromStore();
   }
 
   handleEditSettleSheetInformation(){
@@ -37,6 +38,7 @@ class SettleSheetDetailsModal extends React.Component {
   handleHideSettleSheetModal(){
     const {dispatch} = this.props;
     dispatch(action.hideSettleSheetDetails());
+    dispatch(action.clearSettleSheetDetailFromStore());
   }
 
   render() {
