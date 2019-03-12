@@ -10,6 +10,7 @@ class SettleSheetStartModal extends React.Component {
     super(props);
     this.handleNewShowSubmission = this.handleNewShowSubmission.bind(this);
     this.handleHideSettleSheetModal = this.handleHideSettleSheetModal.bind(this);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
 
   handleNewShowSubmission(event) {
@@ -32,6 +33,11 @@ class SettleSheetStartModal extends React.Component {
     this._dateOfShow = '';
   }
 
+  handleOnSubmit(){
+    this.handleNewShowSubmission(event);
+    this.handleHideSettleSheetModal();
+  }
+
   handleHideSettleSheetModal(){
     const {dispatch} = this.props;
     dispatch(action.hideSettleSheetStart());
@@ -41,11 +47,26 @@ class SettleSheetStartModal extends React.Component {
     return (
       <div className="componentStyle">
         <style jsx>{`
+
+        @keyframes fadeIn {
+          0% {
+            opacity: 0
+          }
+          100% {
+            opacity: 1
+          }
+        }
+
         .componentStyle {
           position: fixed;
           z-index: 1;
           width: 100%;
-                }
+          animation-name: fadeIn;
+          animation-duration: 0.25s; 
+          animation-timing-function: ease; 
+          animation-delay: 0s;
+          animation-fill-mode: both;
+          }
 
         .createNewSettleSheet {
             padding-top:40vh;
@@ -61,7 +82,6 @@ class SettleSheetStartModal extends React.Component {
             width: 100%; 
             height: 100%; 
             overflow: auto; 
-            background-color: rgb(0,0,0); 
             background-color: rgba(0,0,0,0.4);
         }
 
@@ -94,7 +114,7 @@ class SettleSheetStartModal extends React.Component {
               <span className="closeButton" onClick={this.handleHideSettleSheetModal}>&times;</span>
             Please input show info here:
               <hr />
-              <form onSubmit={this.handleNewShowSubmission}><p></p>
+              <form onSubmit={this.handleOnSubmit}><p></p>
                 <p>What's the name of the venue?</p>
                 <input
                   type='text'
