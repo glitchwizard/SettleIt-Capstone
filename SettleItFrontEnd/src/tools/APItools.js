@@ -37,7 +37,20 @@ export function getSettleSheetsFromLocalAPI() {
   return fetch('http://localhost:5000/api/settlesheets')
     .then(
       (result) => {
-        console.log('result: ', result);
+        console.log('getSettleSheetsFromLocalAPI_result: ', result);
+        return result.json();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+}
+
+export function getSettleSheetByIdFromLocalAPI(id) {
+  return fetch('http://localhost:5000/api/settlesheets/' + id)
+    .then(
+      (result) => {
+        console.log('getSettleSheetByIdFromLocalAPI_result: ', result);
         return result.json();
       },
       (error) => {

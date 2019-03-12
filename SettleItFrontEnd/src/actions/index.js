@@ -29,11 +29,11 @@ export const hideSettleSheetDetails = () => ({
   }
 });
 
-export function submitNewShow(payload) {
+export function submitNewShow(actionPayload) {
 
   const initialAction = {
     type: types.ADD_NEW_SETTLE_SHEET,
-    payload: payload
+    payload: actionPayload
   };
 
   return dispatch => {
@@ -57,9 +57,39 @@ export function getSettleSheetList() {
       .then(jsonResult => {
         const returnedAction = Object.assign( { }, initialAction, { payload: jsonResult} );
         dispatch(returnedAction);
-      }
-      );
+      });
   };
 }
 
+export function getSettleSheetByID(id){
+  const initialAction = {
+    type: types.GET_SETTLE_SHEET_DETAILS_BY_ID
+  };
+  return dispatch => {
+    return APItools.getSettleSheetByIdFromLocalAPI(id)
+      .then(jsonResult => {
+        const returnedAction = Object.assign({}, initialAction, { payload: jsonResult});
+        dispatch(returnedAction);
+      });
+  };
+}
+
+export function updateShowInfo(actionPayload) {
+  const initialAction = {
+    type: types.ADD_NEW_SETTLE_SHEET,
+    payload: actionPayload
+  };
+
+  return dispatch => {
+    return APItools.postToAPI(initialAction.payload)
+      .then(jsonResult => {
+        const returnedAction = Object.assign({}, initialAction, {
+          payload: jsonResult
+        });
+        console.log('---------\n returnedAction\n', returnedAction);
+
+        dispatch(returnedAction);
+      });
+  };
+}
 

@@ -2,7 +2,7 @@ import React from 'react';
 import SettleItButton from './SettleItButton';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import * as actions from '../actions';
+import * as action from '../actions';
 
 class SettleSheetTable extends React.Component {
   constructor(props) {
@@ -14,13 +14,14 @@ class SettleSheetTable extends React.Component {
   handleGetSettleSheetsFromLocalAPI() {
     const {dispatch} = this.props;
     event.preventDefault();
-    dispatch(actions.getSettleSheetList());
+    dispatch(action.getSettleSheetList());
   }
 
   handleGetSettleSheetDetails(id){
     console.log('settleSheetDetails click working, and this is the ID: ' + id);
     const { dispatch } = this.props;
-    dispatch(actions.handleGetSettleSheetDetails(id));
+    dispatch(action.getSettleSheetByID(id));
+    dispatch(action.displaySettleSheetDetails());
   }
 
 
@@ -39,7 +40,7 @@ class SettleSheetTable extends React.Component {
             <td style={{textAlign: 'center'}} className="tableRow">{this.props.settleSheets[Id].dateOfShow}</td>
             <td style={{textAlign: 'left'}} className="tableRow">{this.props.settleSheets[Id].headlinerBand}</td>
             <td style={{textAlign: 'left'}} className="tableRow">{this.props.settleSheets[Id].venueName}</td>
-            <td><SettleItButton id={this.props.settleSheets[Id].settleSheetId} buttonText={'Details/Edit'} onClick={() => {this.handleGetSettleSheetDetails(this.props.settleSheets[Id].settleSheetId)}}/></td>
+            <td><SettleItButton id={this.props.settleSheets[Id].settleSheetId} buttonText={'Details/Edit'} onClick={() => {this.handleGetSettleSheetDetails(this.props.settleSheets[Id].settleSheetId);}}/></td>
           </tr>;
         }
       );

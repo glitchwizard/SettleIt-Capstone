@@ -8,11 +8,31 @@ class SettleSheetDetailsModal extends React.Component {
   constructor(props){
     super(props);
     this.handleHideSettleSheetModal = this.handleHideSettleSheetModal.bind(this);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
+  }
+
+  handleOnSubmit(){
+    this.handleEditSettleSheetInformation();
+    this.handleHideSettleSheetModal(); 
+  }
+
+  handleEditSettleSheetInformation(){
+    const { dispatch } = this.props;
+    event.preventDefault();
+
+    let updatedData = {
+      'dateOfShow': this._dateOfShow.value,
+      'headlinerBand': this._headlinerBandName.value,
+      'venueName': this._venueName.value
+    };
+
+    dispatch(action.updateShowInfo(updatedData));
+    
   }
 
   handleHideSettleSheetModal(){
     const {dispatch} = this.props;
-    dispatch(action.hideSettleSheetStart());
+    dispatch(action.hideSettleSheetDetails());
   }
 
   render() {
@@ -64,31 +84,36 @@ class SettleSheetDetailsModal extends React.Component {
           text-decoration: none;
           cursor: pointer;
         }
+
+
       `}  
         </style>
         <div className="settleSheetModalWrapper">
           <div id="settleSheetModal" className="settleSheetModal">
             <div className="modalContent">
               <span className="closeButton" onClick={this.handleHideSettleSheetModal}>&times;</span>
-            Please input show info here:
+              <h2>SETTLE SHEET DETAILS:</h2>
+              <div>Date Created: {this.props.settleSheetDetails.dateCreated} </div>
               <hr />
               <form onSubmit={this.handleNewShowSubmission}><p></p>
-                <p>Venue Name</p>
+                <p>Venue Name:</p>
                 <input
                   type='text'
                   id='venueName'
-                  placeholder='Venue name'
+                  value={this.props.settleSheetDetails.venueName}
                   ref={(venueName) => { this._venueName = venueName; }} />
-                <p>Headliner</p>
+                <p>Headliner:</p>
                 <input
                   type='text'
                   id='headlinerBandName'
                   placeholder='Headliner name'
+                  value={this.props.settleSheetDetails.headlinerBand}
                   ref={(headlinerBandName) => {this._headlinerBandName = headlinerBandName; }} />
                 <p> Show Date: </p>
                 <input
                   type='date'
                   id='dateOfShow'
+                  value={this.props.settleSheetDetails.dateOfShow}
                   ref={(dateOfShow) => {this._dateOfShow = dateOfShow; }} />
                 <p></p>
                 <button type='submit'> Ok </button>
@@ -103,8 +128,15 @@ class SettleSheetDetailsModal extends React.Component {
 
 }
 
-SettleSheetDetailsModal.propTypes = {
-  dispatch: PropTypes.func
+const mapStateToProps = state => {
+  return {
+    settleSheetDetails: state.settleSheetDetails
+  };
 };
 
-export default connect()(SettleSheetDetailsModal);
+SettleSheetDetailsModal.propTypes = {
+  dispatch: PropTypes.func,
+  settleSheetDetails: PropTypes.object
+};
+
+export default connect(mapStateToProps)(SettleSheetDetailsModal);

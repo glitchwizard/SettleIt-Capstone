@@ -4,9 +4,10 @@ import BackgroundImage from './BackgroundImage';
 import Header from './Header';
 import PropTypes from 'prop-types';
 import SettleItButton from './SettleItButton';
-import * as actions from '../actions';
+import * as action from '../actions';
 import SettleSheetStartModal from './SettleSheetStartModal';
 import SettleSheetTable from './SettleSheetTable';
+import SettleSheetDetailsModal from './SettleSheetDetailsModal';
 
 class App extends React.Component {
   constructor(props) {
@@ -19,9 +20,9 @@ class App extends React.Component {
     const {dispatch} = this.props;
     event.preventDefault();
     if (this.props.reduxState.settleSheetModalVisibility.isModalDisplayed) {
-      dispatch(actions.hideSettleSheetStart());
+      dispatch(action.hideSettleSheetStart());
     } else {
-      dispatch(actions.displaySettleSheetStart());
+      dispatch(action.displaySettleSheetStart());
     }
   }
 
@@ -29,9 +30,9 @@ class App extends React.Component {
     const {dispatch} = this.props;
     event.preventDefault();
     if (this.props.reduxState.settleSheetModalVisibility.isModalDisplayed) {
-      dispatch(actions.hideSettleSheetStart());
+      dispatch(action.hideSettleSheetDetails());
     } else {
-      dispatch(actions.displaySettleSheetStart());
+      dispatch(action.displaySettleSheetDetails());
     }
   }
 
@@ -44,6 +45,17 @@ class App extends React.Component {
     } else {
       divToDisplay = null;
     }
+
+    let settleSheetDetailsDisplay;
+
+    if (this.props.reduxState.settleSheetModalVisibility.isSettleSheetDetailModalDisplayed) {
+      settleSheetDetailsDisplay = <div>
+        <SettleSheetDetailsModal />
+      </div>;
+    } else {
+      settleSheetDetailsDisplay = null;
+    }
+
 
     return (
       <div className="mainPage">
@@ -70,6 +82,7 @@ class App extends React.Component {
           <div className="hero">
             <BackgroundImage />
             {divToDisplay}
+            {settleSheetDetailsDisplay}
             <div className="centerThisItem" >
               <SettleItButton buttonText="Create Settle Sheet" onClick={this.handleSettleSheetModalToggle} />
               <br />
