@@ -24,17 +24,21 @@ export function postToAPI(data) {
     referrer: 'no-referrer',
     body: JSON.stringify(data),
   })
-    .then(response => {
-      return response.json();
-    });
+    .then((result) => {
+      return result.json();
+    },
+    (error) => {
+      console.log(error);
+    }
+    );
 }
-export function getBandsFromLocalAPI() {
-  fetch('http://localhost:5000/api/settlesheets')
+
+export function getSettleSheetsFromLocalAPI() {
+  return fetch('http://localhost:5000/api/settlesheets')
     .then(
       (result) => {
-        result.json().then(data => {
-          return data;
-        });
+        console.log('result: ', result);
+        return result.json();
       },
       (error) => {
         console.log(error);

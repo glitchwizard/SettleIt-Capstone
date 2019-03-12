@@ -34,4 +34,18 @@ export function submitNewShow(payload) {
 
 }
 
+export function getSettleSheetList() {
+  const initialAction = {
+    type: types.GET_SETTLE_SHEETS_FROM_LOCAL_API
+  };
+  return dispatch => {
+    return APItools.getSettleSheetsFromLocalAPI()
+      .then(jsonResult => {
+        const returnedAction = Object.assign( { }, initialAction, { payload: jsonResult} );
+        dispatch(returnedAction);
+      }
+      );
+  };
+}
+
 
