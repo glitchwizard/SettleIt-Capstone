@@ -28,8 +28,8 @@ const render = (Component) => {
     <AppContainer>
       <HashRouter>
         <Provider store={store}>
+          <button style={{position: 'absolute'}} onClick={getReduxState}>Admin: Log Redux State</button>
           <Component />
-          <button onClick={getReduxState}>Get Redux State</button>
         </Provider>
       </HashRouter>
     </AppContainer>,
