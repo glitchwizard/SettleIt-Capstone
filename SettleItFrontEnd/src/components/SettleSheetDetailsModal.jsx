@@ -12,21 +12,25 @@ class SettleSheetDetailsModal extends React.Component {
   }
 
   handleOnSubmit(){
+    console.log('submit')
     this.handleEditSettleSheetInformation();
-    this.handleHideSettleSheetModal(); 
   }
 
   handleEditSettleSheetInformation(){
     const { dispatch } = this.props;
     event.preventDefault();
 
-    let updatedData = {
+    const initialData = this.props.settleSheetDetails;
+
+    const updatedData = {
       'dateOfShow': this._dateOfShow.value,
       'headlinerBand': this._headlinerBandName.value,
       'venueName': this._venueName.value
     };
 
-    dispatch(action.updateShowInfo(updatedData));
+    const actionPayload = Object.assign( {}, initialData, updatedData);   
+
+    dispatch(action.updateShowInfo(actionPayload));
     
   }
 
@@ -95,25 +99,25 @@ class SettleSheetDetailsModal extends React.Component {
               <h2>SETTLE SHEET DETAILS:</h2>
               <div>Date Created: {this.props.settleSheetDetails.dateCreated} </div>
               <hr />
-              <form onSubmit={this.handleNewShowSubmission}><p></p>
+              <form onSubmit={this.handleOnSubmit}><p></p>
                 <p>Venue Name:</p>
                 <input
                   type='text'
                   id='venueName'
-                  value={this.props.settleSheetDetails.venueName}
+                  defaultValue={this.props.settleSheetDetails.venueName}
                   ref={(venueName) => { this._venueName = venueName; }} />
                 <p>Headliner:</p>
                 <input
                   type='text'
                   id='headlinerBandName'
                   placeholder='Headliner name'
-                  value={this.props.settleSheetDetails.headlinerBand}
+                  defaultValue={this.props.settleSheetDetails.headlinerBand}
                   ref={(headlinerBandName) => {this._headlinerBandName = headlinerBandName; }} />
                 <p> Show Date: </p>
                 <input
                   type='date'
                   id='dateOfShow'
-                  value={this.props.settleSheetDetails.dateOfShow}
+                  defaultValue={this.props.settleSheetDetails.dateOfShow}
                   ref={(dateOfShow) => {this._dateOfShow = dateOfShow; }} />
                 <p></p>
                 <button type='submit'> Ok </button>

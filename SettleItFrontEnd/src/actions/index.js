@@ -79,9 +79,8 @@ export function updateShowInfo(actionPayload) {
     type: types.ADD_NEW_SETTLE_SHEET,
     payload: actionPayload
   };
-
   return dispatch => {
-    return APItools.postToAPI(initialAction.payload)
+    return APItools.updateSettleSheetInfo(initialAction.payload)
       .then(jsonResult => {
         const returnedAction = Object.assign({}, initialAction, {
           payload: jsonResult

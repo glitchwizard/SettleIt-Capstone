@@ -49,6 +49,8 @@ namespace SettleItAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSettleSheet([FromRoute] long id, [FromBody] SettleSheet settleSheet)
         {
+
+						
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -56,6 +58,7 @@ namespace SettleItAPI.Controllers
 
             if (id != settleSheet.SettleSheetId)
             {
+				
                 return BadRequest();
             }
 
@@ -64,7 +67,9 @@ namespace SettleItAPI.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-            }
+
+								return CreatedAtAction("GetSettleSheet", new { id = settleSheet.SettleSheetId }, settleSheet);
+						}
             catch (DbUpdateConcurrencyException)
             {
                 if (!SettleSheetExists(id))
