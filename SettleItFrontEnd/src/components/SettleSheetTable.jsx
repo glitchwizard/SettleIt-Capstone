@@ -17,25 +17,29 @@ class SettleSheetTable extends React.Component {
     dispatch(actions.getSettleSheetList());
   }
 
-  handleGetSettleSheetDetails(){
-    console.log('settleSheetDetails click working');
+  handleGetSettleSheetDetails(id){
+    console.log('settleSheetDetails click working, and this is the ID: ' + id);
+    const { dispatch } = this.props;
+    dispatch(actions.handleGetSettleSheetDetails(id));
   }
 
-  
+
 
   render() {
     let settleSheetsListRender;
+    let settleSheetsTableRender;
 
     if (Object.keys(this.props.settleSheets).length > 0) {
       settleSheetsListRender = Object.keys(this.props.settleSheets).map(
-        (settleSheetId) => {
-          return <tr key={settleSheetId}>
-            <td className="tableRow" >{this.props.settleSheets[settleSheetId].settleSheetId}</td>
-            <td className="tableRow">{this.props.settleSheets[settleSheetId].dateCreated}</td>
-            <td className="tableRow">{this.props.settleSheets[settleSheetId].dateOfShow}</td>
-            <td className="tableRow">{this.props.settleSheets[settleSheetId].headlinerBand}</td>
-            <td className="tableRow">{this.props.settleSheets[settleSheetId].venueName}</td>
-            <td><SettleItButton id={settleSheetId} buttonText={(parseInt(settleSheetId)+1) + ". Details/Edit" } onClick={this.handleGetSettleSheetDetails}/></td>
+        (Id) => {
+          return <tr key={Id}>
+            <td style={{textAlign: 'center'}}><strong>{(parseInt(Id) + 1) + '. '}</strong></td>
+            <td style={{textAlign: 'center'}} className="tableRow">{this.props.settleSheets[Id].settleSheetId}</td>
+            <td style={{textAlign: 'center'}} className="tableRow">{this.props.settleSheets[Id].dateCreated}</td>
+            <td style={{textAlign: 'center'}} className="tableRow">{this.props.settleSheets[Id].dateOfShow}</td>
+            <td style={{textAlign: 'left'}} className="tableRow">{this.props.settleSheets[Id].headlinerBand}</td>
+            <td style={{textAlign: 'left'}} className="tableRow">{this.props.settleSheets[Id].venueName}</td>
+            <td><SettleItButton id={this.props.settleSheets[Id].settleSheetId} buttonText={'Details/Edit'} onClick={() => {this.handleGetSettleSheetDetails(this.props.settleSheets[Id].settleSheetId)}}/></td>
           </tr>;
         }
       );
@@ -43,12 +47,34 @@ class SettleSheetTable extends React.Component {
       settleSheetsListRender = null;
     }
 
-
+    if (Object.keys(this.props.settleSheets).length > 0) {
+      settleSheetsTableRender = <table>
+        <thead>
+          <tr>
+            <div></div>
+            <th>Settle Sheet #</th>
+            <th>Date Created</th>
+            <th>Date of Show</th>
+            <th>Headliner Band</th>
+            <th>Venue Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {settleSheetsListRender}
+        </tbody>
+      </table>;
+    } else {
+      settleSheetsListRender = null;
+    }
     return (
       <div className="componentStyle">
         <style jsx>{`
         .componentStyle {
-            /* input CSS here*/
+            border: 1px solid black;
+            border-radius: .5em;
+            background-color: rgba(100,100,100,0.5);
+            border: 1px solid rgba(200,200,200,0.5);
+            padding: 3px;
                 }
 
           table {
@@ -62,7 +88,7 @@ class SettleSheetTable extends React.Component {
           th, td {
             border: 1px solid black;
             border-radius: .25em;
-            background-color: rgba(50,50,50,0.5);
+            background-color: rgba(25,25,25,0.5);
             border: 1px solid rgba(200,200,200,0.5);
             padding: 10px;
             text-align: center;
@@ -71,16 +97,10 @@ class SettleSheetTable extends React.Component {
           .tableRow {
             border: 1px solid black;
             border-radius: .25em;
-            background-color: rgba(50,50,50,0.5);
+            background-color: rgba(25,25,25,0.5);
             border: 1px solid rgba(200,200,200,0.5);
             padding: 7px;
             text-align: center;
-          }
-
-          th:hover {
-            border: 1px solid black;
-            border-radius: .25em;
-            background-color: rgba(0,0,0,0.7)
           }
 
           .tableRow:hover {
@@ -90,25 +110,8 @@ class SettleSheetTable extends React.Component {
           }
             `}
         </style>
-        <table>
-          <thead>
-            <tr>
-              <div className="centerThisItem">
-                <SettleItButton className="getBandsButton" onClick={this.handleGetSettleSheetsFromLocalAPI} buttonText="Get Settle Sheet List" />
-              </div>
-            </tr>
-            <tr>
-              <th>Settle Sheet #</th>
-              <th>Date Created</th>
-              <th>Date of Show</th>
-              <th>Headliner Band</th>
-              <th>Venue Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            {settleSheetsListRender}
-          </tbody>
-        </table>
+        <SettleItButton className="getBandsButton" onClick={this.handleGetSettleSheetsFromLocalAPI} buttonText="Get Settle Sheet List" />
+        {settleSheetsTableRender}
       </div>
     );
   }
@@ -122,7 +125,8 @@ const mapStateToProps = state => {
 
 SettleSheetTable.propTypes = {
   dispatch: PropTypes.func,
-  settleSheets: PropTypes.object
+  settleSheets: PropTypes.object,
+  currentSettleSheet: PropTypes.object
 };
 
 export default connect(mapStateToProps)(SettleSheetTable);

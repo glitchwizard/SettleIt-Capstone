@@ -12,9 +12,20 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.handleSettleSheetModalToggle = this.handleSettleSheetModalToggle.bind(this);
+    this.handleSettleSheetDetailModalToggle = this.handleSettleSheetDetailModalToggle.bind(this);
   }
 
   handleSettleSheetModalToggle() {
+    const {dispatch} = this.props;
+    event.preventDefault();
+    if (this.props.reduxState.settleSheetModalVisibility.isModalDisplayed) {
+      dispatch(actions.hideSettleSheetStart());
+    } else {
+      dispatch(actions.displaySettleSheetStart());
+    }
+  }
+
+  handleSettleSheetDetailModalToggle() {
     const {dispatch} = this.props;
     event.preventDefault();
     if (this.props.reduxState.settleSheetModalVisibility.isModalDisplayed) {

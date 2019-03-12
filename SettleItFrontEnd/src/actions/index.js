@@ -15,6 +15,20 @@ export const hideSettleSheetStart = () => ({
   }
 });
 
+export const displaySettleSheetDetails = () => ({
+  type: types.DISPLAY_SETTLE_SHEET_START_TOGGLE,
+  payload: {
+    isSettleSheetDetailModalDisplayed: true
+  }
+});
+
+export const hideSettleSheetDetails = () => ({
+  type: types.HIDE_SETTLE_SHEET_START_TOGGLE,
+  payload: {
+    isSettleSheetDetailModalDisplayed: null
+  }
+});
+
 export function submitNewShow(payload) {
 
   const initialAction = {
