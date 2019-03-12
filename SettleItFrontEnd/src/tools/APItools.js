@@ -28,6 +28,7 @@ export function postToAPI(data) {
       return result.json();
     },
     (error) => {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
     );
@@ -37,10 +38,10 @@ export function getSettleSheetsFromLocalAPI() {
   return fetch('http://localhost:5000/api/settlesheets')
     .then(
       (result) => {
-        console.log('getSettleSheetsFromLocalAPI_result: ', result);
         return result.json();
       },
       (error) => {
+        // eslint-disable-next-line no-console
         console.log(error);
       }
     );
@@ -50,17 +51,16 @@ export function getSettleSheetByIdFromLocalAPI(id) {
   return fetch('http://localhost:5000/api/settlesheets/' + id)
     .then(
       (result) => {
-        console.log('getSettleSheetByIdFromLocalAPI_result: ', result);
         return result.json();
       },
       (error) => {
+        // eslint-disable-next-line no-console
         console.log(error);
       }
     );
 }
 
 export function updateSettleSheetInfo(data) {
-  debugger;
   return fetch(('http://localhost:5000/api/settlesheets/' + data.settleSheetId), {
     method: 'PUT',
     mode: 'cors',
@@ -77,6 +77,7 @@ export function updateSettleSheetInfo(data) {
       return result.json();
     },
     (error) => {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
     );
