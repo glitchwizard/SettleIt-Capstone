@@ -49,7 +49,6 @@ namespace SettleItAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSettleSheet([FromRoute] long id, [FromBody] SettleSheet settleSheet)
         {
-
 						
             if (!ModelState.IsValid)
             {

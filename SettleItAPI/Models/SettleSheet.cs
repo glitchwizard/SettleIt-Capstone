@@ -13,6 +13,14 @@ namespace SettleItAPI.Models
     public string DateOfShow { get; set; }
     public string HeadlinerBand { get; set; }
     public string VenueName { get; set; }
-
-  }
+		public int TicketsSold { get; set; }
+		[Column(TypeName = "decimal(18,4)")]
+		public decimal TicketPrice { get; set; }
+		[Column(TypeName = "decimal(18,4)")]
+		public decimal GrossBarSales { get; set; }
+		[Column(TypeName = "decimal(18,4)")]
+		public float BarSplit { get; set; }
+		[Column(TypeName = "decimal(18,4)")]
+		public decimal StageOverheadCost { get; set; }
+	}
 }

@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SettleItAPI.Models;
 
 namespace SettleItAPI.Migrations
 {
     [DbContext(typeof(SettleSheetContext))]
-    partial class SettleSheetContextModelSnapshot : ModelSnapshot
+    [Migration("20190313152650_updateDecimalFloatAmount")]
+    partial class updateDecimalFloatAmount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,21 +26,11 @@ namespace SettleItAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("BarSplit")
-                        .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
-                        .HasColumnType("decimal(18,4)");
-
                     b.Property<string>("DateCreated");
 
                     b.Property<string>("DateOfShow");
 
-                    b.Property<decimal>("GrossBarSales")
-                        .HasColumnType("decimal(18,4)");
-
                     b.Property<string>("HeadlinerBand");
-
-                    b.Property<decimal>("StageOverheadCost")
-                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("TicketPrice")
                         .HasColumnType("decimal(18,4)");
@@ -47,13 +39,23 @@ namespace SettleItAPI.Migrations
 
                     b.Property<string>("VenueName");
 
+                    b.Property<decimal>("barSplit")
+                        .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal>("grossBarSales")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal>("stageOverheadCost")
+                        .HasColumnType("decimal(18,4)");
+
                     b.HasKey("SettleSheetId");
 
                     b.ToTable("SettleSheets");
 
                     b.HasData(
-                        new { SettleSheetId = 1L, BarSplit = 0m, DateCreated = "2019-03-08", DateOfShow = "2019-03-19", GrossBarSales = 0m, HeadlinerBand = "Stargasm", StageOverheadCost = 0m, TicketPrice = 0m, TicketsSold = 0, VenueName = "Doug Fir Lounge" },
-                        new { SettleSheetId = 2L, BarSplit = 0m, DateCreated = "2019-03-08", DateOfShow = "2019-03-27", GrossBarSales = 0m, HeadlinerBand = "Gabby Holt", StageOverheadCost = 0m, TicketPrice = 0m, TicketsSold = 0, VenueName = "Dante's" }
+                        new { SettleSheetId = 1L, DateCreated = "2019-03-08", DateOfShow = "2019-03-19", HeadlinerBand = "Stargasm", TicketPrice = 0m, TicketsSold = 0, VenueName = "Doug Fir Lounge", barSplit = 0m, grossBarSales = 0m, stageOverheadCost = 0m },
+                        new { SettleSheetId = 2L, DateCreated = "2019-03-08", DateOfShow = "2019-03-27", HeadlinerBand = "Gabby Holt", TicketPrice = 0m, TicketsSold = 0, VenueName = "Dante's", barSplit = 0m, grossBarSales = 0m, stageOverheadCost = 0m }
                     );
                 });
 #pragma warning restore 612, 618
