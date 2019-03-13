@@ -93,8 +93,6 @@ export function updateShowInfo(actionPayload) {
 }
 
 export const clearSettleSheetDetailFromStore = () => ({
-        type: types.CLEAR_SETTLE_SHEET_DETAIL_FROM_STORE,
-        payload: {}
-      });
-
-}
+  type: types.CLEAR_SETTLE_SHEET_DETAIL_FROM_STORE,
+  payload: {}
+});

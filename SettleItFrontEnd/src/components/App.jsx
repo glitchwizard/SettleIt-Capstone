@@ -13,7 +13,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.handleSettleSheetModalToggle = this.handleSettleSheetModalToggle.bind(this);
-    this.handleSettleSheetDetailModalToggle = this.handleSettleSheetDetailModalToggle.bind(this);
   }
 
   handleSettleSheetModalToggle() {

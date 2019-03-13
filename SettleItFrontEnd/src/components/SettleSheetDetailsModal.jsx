@@ -9,34 +9,31 @@ class SettleSheetDetailsModal extends React.Component {
     super(props);
     this.handleHideSettleSheetModal = this.handleHideSettleSheetModal.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.handleEditSettleSheetInformation = this.handleEditSettleSheetInformation.bind(this);
   }
 
   handleOnSubmit(){
     console.log('submit');
     this.handleEditSettleSheetInformation();
-    this.clearSettleSheetDetailFromStore();
+    this.handleHideSettleSheetModal();
   }
 
   handleEditSettleSheetInformation(){
     const { dispatch } = this.props;
     event.preventDefault();
-
     const initialData = this.props.settleSheetDetails;
-
     const updatedData = {
       'dateOfShow': this._dateOfShow.value,
       'headlinerBand': this._headlinerBandName.value,
       'venueName': this._venueName.value
     };
-
     const actionPayload = Object.assign( {}, initialData, updatedData);   
-
     dispatch(action.updateShowInfo(actionPayload));
-    
   }
 
   handleHideSettleSheetModal(){
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
+    event.preventDefault();
     dispatch(action.hideSettleSheetDetails());
     dispatch(action.clearSettleSheetDetailFromStore());
   }

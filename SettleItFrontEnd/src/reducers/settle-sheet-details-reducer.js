@@ -9,7 +9,7 @@ export default (state = {}, action) => {
   }
 
   case actionType.CLEAR_SETTLE_SHEET_DETAIL_FROM_STORE: {
-    return Object.assign( { }, state, action.payload);
+    return Object.assign( { } );
   }
 
   default:
