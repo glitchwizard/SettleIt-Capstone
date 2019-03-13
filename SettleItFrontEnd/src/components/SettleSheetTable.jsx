@@ -32,7 +32,26 @@ class SettleSheetTable extends React.Component {
     if (Object.keys(this.props.settleSheets).length > 0) {
       settleSheetsListRender = Object.keys(this.props.settleSheets).map(
         (Id) => {
-          return <tr key={Id}>
+          return <tr key={this.props.settleSheets[Id].settleSheetId}>
+          <style jsx>{`
+            td {
+            border: 1px solid black;
+            border-radius: .25em;
+            background-color: rgba(25,25,25,0.5);
+            border: 1px solid rgba(200,200,200,0.5);
+            padding: 5px;
+            text-align: center;
+          }
+
+          .tableRow {
+            border: 1px solid black;
+            border-radius: .25em;
+            background-color: rgba(25,25,25,0.5);
+            border: 1px solid rgba(200,200,200,0.5);
+            padding: 7px;
+            text-align: center;
+          }
+            `}</style>
             <td style={{textAlign: 'center'}} className="tableRow">{this.props.settleSheets[Id].settleSheetId}</td>
             <td style={{textAlign: 'center'}} className="tableRow">{this.props.settleSheets[Id].dateCreated}</td>
             <td style={{textAlign: 'center'}} className="tableRow">{this.props.settleSheets[Id].dateOfShow}</td>
@@ -48,6 +67,25 @@ class SettleSheetTable extends React.Component {
 
     if (Object.keys(this.props.settleSheets).length > 0) {
       settleSheetsTableRender = <table>
+        <style jsx>{`
+          table {
+            border: 1px solid black;
+            border-radius: .5em;
+            background-color: rgba(100,100,100,0.5);
+            border: 1px solid rgba(200,200,200,0.5);
+            padding: 3px;
+          }
+
+          th {
+            border: 1px solid black;
+            border-radius: .25em;
+            background-color: rgba(25,25,25,0.5);
+            border: 1px solid rgba(200,200,200,0.5);
+            padding: 10px;
+            text-align: center;
+          }
+            `}
+        </style>
         <thead>
           <tr>
             <th>Settle Sheet #</th>
