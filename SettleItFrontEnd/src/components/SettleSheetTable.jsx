@@ -14,6 +14,7 @@ class SettleSheetTable extends React.Component {
   handleGetSettleSheetsFromLocalAPI() {
     const {dispatch} = this.props;
     event.preventDefault();
+    dispatch(action.clearSettleSheetList());
     dispatch(action.getSettleSheetList());
   }
 
@@ -24,8 +25,6 @@ class SettleSheetTable extends React.Component {
     dispatch(action.displaySettleSheetDetails());
   }
 
-
-
   render() {
     let settleSheetsListRender;
     let settleSheetsTableRender;
@@ -34,7 +33,6 @@ class SettleSheetTable extends React.Component {
       settleSheetsListRender = Object.keys(this.props.settleSheets).map(
         (Id) => {
           return <tr key={Id}>
-            <td style={{textAlign: 'center'}}><strong>{(parseInt(Id) + 1) + '. '}</strong></td>
             <td style={{textAlign: 'center'}} className="tableRow">{this.props.settleSheets[Id].settleSheetId}</td>
             <td style={{textAlign: 'center'}} className="tableRow">{this.props.settleSheets[Id].dateCreated}</td>
             <td style={{textAlign: 'center'}} className="tableRow">{this.props.settleSheets[Id].dateOfShow}</td>
@@ -52,7 +50,6 @@ class SettleSheetTable extends React.Component {
       settleSheetsTableRender = <table>
         <thead>
           <tr>
-            <div></div>
             <th>Settle Sheet #</th>
             <th>Date Created</th>
             <th>Date of Show</th>
