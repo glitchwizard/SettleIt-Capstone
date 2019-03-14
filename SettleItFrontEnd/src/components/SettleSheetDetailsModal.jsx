@@ -8,9 +8,7 @@ class SettleSheetDetailsModal extends React.Component {
 
   constructor(props){
     super(props);
-    this.state={
-      barSplitPercentage: 0,
-    };
+    this.state={};
     this.handleHideSettleSheetModal = this.handleHideSettleSheetModal.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleEditSettleSheetInformation = this.handleEditSettleSheetInformation.bind(this);
@@ -32,7 +30,7 @@ class SettleSheetDetailsModal extends React.Component {
       'headlinerBand': this._headlinerBandName.value,
       'venueName': this._venueName.value,
 
-      'barSplitPercentage': this.state.barSplitPercentage,
+      'bandCutOfBarPercentage': this.state.bandCutOfBarPercentage,
       'grossBarSales': this.state.grossBarSales,
       'grossBarSplitPayout': this.state.grossBarSplitPayout,
       'grossTicketIncome': this.state.grossTicketIncome,
@@ -41,7 +39,8 @@ class SettleSheetDetailsModal extends React.Component {
       'ticketsSoldQTY': this.state.ticketsSoldQTY,
       'totalGrossExpenses': this.state.totalGrossExpenses,
       'totalGrossIncome': this.state.totalGrossIncome,
-      'finalNetIncome': this.state.finalNetIncome
+      'finalNetIncome': this.state.finalNetIncome,
+      'houseCutOfBar': (this.state.grossBarSales - this.state.grossBarSplitPayout)
     };
     const actionPayload = Object.assign( {}, initialData, updatedData);   
     dispatch(action.updateShowInfo(actionPayload));
@@ -75,10 +74,12 @@ class SettleSheetDetailsModal extends React.Component {
   calculateTotalIncome(){
     let totalGrossIncomeCalc = this.isGrossIncomePositive();
     this.calculateGrossTicketIncome();
-    let grossBarSales = this.calculateGrossBarSales();
+    this.calculateGrossBarSales();
     let monetaryHouseCutOfDoor = this.calculateHouseCutOfTicketSales();
+    let monetaryHouseCutOfBar = this.calculateHouseCutOfBar();
+    
+    totalGrossIncomeCalc = monetaryHouseCutOfDoor + monetaryHouseCutOfBar;
 
-    totalGrossIncomeCalc = monetaryHouseCutOfDoor + grossBarSales;
     if (!isNaN(totalGrossIncomeCalc)) {
       this.setState(
         {
@@ -126,6 +127,16 @@ class SettleSheetDetailsModal extends React.Component {
     }
   }
 
+  calculateHouseCutOfBar(){
+    if (parseFloat(this.state.grossBarSales) >= 0 && parseFloat(this.state.bandCutOfBarPercentage) >= 0) {
+      let monetaryHouseCutOfBar = parseFloat(this.state.grossBarSales) * ( 1 - (parseFloat(this.state.bandCutOfBarPercentage) / 100));
+      this.setState({
+        monetaryHouseCutOfBar: monetaryHouseCutOfBar.toFixed(2)
+      });
+      return monetaryHouseCutOfBar;
+    }
+  }
+
   calculateTotalExpenses(){
     let totalGrossExpenses = this.areGrossExpensesPositive();
     let grossBarSplitPayout = this.calculateGrossBarSplitPayout();
@@ -153,8 +164,8 @@ class SettleSheetDetailsModal extends React.Component {
   }
 
   calculateGrossBarSplitPayout(){
-    if (parseFloat(this.state.barSplitPercentage) >= 0 && parseFloat(this.state.grossBarSales) >= 0) {
-      let grossBarSplitPayout = parseFloat(this.state.grossBarSales) * (parseFloat(this.state.barSplitPercentage) / 100);
+    if (parseFloat(this.state.bandCutOfBarPercentage) >= 0 && parseFloat(this.state.grossBarSales) >= 0) {
+      let grossBarSplitPayout = parseFloat(this.state.grossBarSales) * (parseFloat(this.state.bandCutOfBarPercentage) / 100);
       this.setState({
         grossBarSplitPayout: grossBarSplitPayout.toFixed(2)
       });
@@ -245,6 +256,13 @@ class SettleSheetDetailsModal extends React.Component {
 
         .summaryDiv{
           padding: 10px;
+          margin: 3px;
+          border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        p {
+          margin: 3px;
+          padding: 5px;
         }
 
       `}  
@@ -258,7 +276,7 @@ class SettleSheetDetailsModal extends React.Component {
               <hr />
               <form onSubmit={this.handleOnSubmit} className="formFlexContainer">
                 <div className="formFlexChild">
-                  <p></p>
+                  <p/>
                   <p>Venue Name:</p>
                   <input
                     type='text'
@@ -281,8 +299,8 @@ class SettleSheetDetailsModal extends React.Component {
                     defaultValue={this.props.settleSheetDetails.dateOfShow}
                     ref={(dateOfShow) => {this._dateOfShow = dateOfShow; }}
                   />
-                  <p></p>
-                  <SettleItButton buttonText='Ok' type='submit'/>
+                  <p/>
+                  <SettleItButton buttonText='Submit Changes' type='submit'/>
                 </div>
                 <div className="formFlexChild">
                   <p>Tickets Sold (Qty):</p>
@@ -302,16 +320,16 @@ class SettleSheetDetailsModal extends React.Component {
                     defaultValue={this.props.settleSheetDetails.ticketPrice}
                     ref={(ticketPrice) => {this._ticketPrice = ticketPrice;}} 
                     onChange={this.handleChange}
-                  />
-                  <p>House Cut of Door (%):</p>
-                  $<input
+                    />
+                    <p>House Cut of Door (%):</p>
+                  <input
                     type='number'
                     id='houseCutOfDoorPercentage'
                     placeholder='House cut %'
                     defaultValue={this.props.settleSheetDetails.houseCutOfDoorPercentage}
                     ref={(houseCutOfDoorPercentage) => {this._ticketPrice = houseCutOfDoorPercentage;}}
                     onChange={this.handleChange}
-                  />
+                  />%
                   <p> Gross Bar Sales ($): </p>
                   $<input
                     type='number'
@@ -321,19 +339,19 @@ class SettleSheetDetailsModal extends React.Component {
                     ref={(grossBarSales) => {this._barSales = grossBarSales;}} 
                     onChange={this.handleChange}
                   />
-                  <p></p>
-                  <p> Bar Split: (%)</p>
+                  <p/>
+                  <p>Bar Split: (%)</p>
                   <input
                     type='number'
-                    id='barSplitPercentage'
+                    id='bandCutOfBarPercentage'
                     placeholder='Bar Split'
-                    defaultValue={this.props.settleSheetDetails.barSplitPercentage}
-                    ref={(barSplitPercentage) => {this._barSplitPercentage = barSplitPercentage;}} 
+                    defaultValue={this.props.settleSheetDetails.bandCutOfBarPercentage}
+                    ref={(bandCutOfBarPercentage) => {this._barSplitPercentage = bandCutOfBarPercentage;}} 
                     onChange={this.handleChange}
-                  />
-                  <p></p>
-                  <p> Stage Overhead Cost ($):</p>
-                  <input
+                  />%
+                  <p/>
+                  <p>Stage Overhead Cost ($):</p>
+                  $<input
                     type='number'
                     id='stageOverheadCost'
                     placeholder='Overhead Cost'
@@ -341,22 +359,33 @@ class SettleSheetDetailsModal extends React.Component {
                     ref={(stageOverheadCost) => {this._stageOverheadCost = stageOverheadCost;}} 
                     onChange={this.handleChange}
                   />
-                  <p></p>
+                  <p/>
                 </div>
                 <div className="formFlexChild">
                   <h2>Summary:</h2>
                   <hr/>
+                  <h3>Gross calculations:</h3>
+                  <div className='formFlexContainer'>
+                    <p>Gross Ticket Income: ${this.state.grossTicketIncome}</p>
+                    <p>Gross Bar Income: ${this.state.grossBarSales}</p>
+                  </div>
+                  <hr/>
+
                   <div className="formFlexContainer">
                     <div className="summaryDiv">
-                      <p>Gross Ticket Income: ${this.state.grossTicketIncome}</p>
-                      <p>House Tix Cut: ${this.state.monetaryHouseCutOfDoor}</p>
-                      <p>Gross Bar Income: ${this.state.grossBarSales}</p>
-                      <h3>Total Gross Income: ${this.state.totalGrossIncome}</h3>
+                      <h3>Income</h3>
+                      <hr/>
+                      <p>House Cut of Bar: ${this.state.monetaryHouseCutOfBar}</p>
+                      <p>House Cut of Tix: ${this.state.monetaryHouseCutOfDoor}</p>
+                      <h3>Total Venue Income: ${this.state.totalGrossIncome}</h3>
                     </div>
                     <div className="summaryDiv">
+                      <h3>Expenses</h3>
+                      <hr />
+                      <p>Ticket payout: ${this.state.ticketPayout}</p>
                       <p>Bar Payout: ${this.state.grossBarSplitPayout}</p>
                       <p>Overhead Expense: ${this.state.stageOverheadCost}</p>
-                      <h3>Total Gross Expenses: ${this.state.totalGrossExpenses}</h3>
+                      <h3>Total Venue Expenses: ${this.state.totalGrossExpenses}</h3>
                     </div>
                   </div>
                   <hr/>
@@ -368,7 +397,6 @@ class SettleSheetDetailsModal extends React.Component {
                 </div>
               </form>
             </div>
-            {JSON.stringify(this.state)}
           </div>
         </div>
       </div>
