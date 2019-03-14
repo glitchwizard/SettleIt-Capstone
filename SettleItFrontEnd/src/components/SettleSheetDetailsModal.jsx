@@ -31,16 +31,19 @@ class SettleSheetDetailsModal extends React.Component {
       'venueName': this._venueName.value,
 
       'bandCutOfBarPercentage': this.state.bandCutOfBarPercentage,
+      'finalNetIncome': this.state.finalNetIncome,
       'grossBarSales': this.state.grossBarSales,
       'grossBarSplitPayout': this.state.grossBarSplitPayout,
       'grossTicketIncome': this.state.grossTicketIncome,
+      'grossTicketSplitPayout': this.state.grossTicketSplitPayout,
+      'houseCutOfDoorPercentage': this.state.houseCutOfDoorPercentage,
+      'monetaryHouseCutOfBar': this.state.monetaryHouseCutOfBar,
+      'monetaryHouseCutOfDoor': this.state.monetaryHouseCutOfDoor,
       'stageOverheadCost': this.state.stageOverheadCost,
       'ticketPrice': this.state.ticketPrice,
       'ticketsSoldQTY': this.state.ticketsSoldQTY,
       'totalGrossExpenses': this.state.totalGrossExpenses,
-      'totalGrossIncome': this.state.totalGrossIncome,
-      'finalNetIncome': this.state.finalNetIncome,
-      'houseCutOfBar': (this.state.grossBarSales - this.state.grossBarSplitPayout)
+      'totalGrossIncome': this.state.totalGrossIncome
     };
     const actionPayload = Object.assign( {}, initialData, updatedData);   
     dispatch(action.updateShowInfo(actionPayload));
