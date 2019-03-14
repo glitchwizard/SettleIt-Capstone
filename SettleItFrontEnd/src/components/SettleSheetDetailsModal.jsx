@@ -9,9 +9,9 @@ class SettleSheetDetailsModal extends React.Component {
   constructor(props){
     super(props);
     this.state = {};
-
-    console.log('this.props', this.props);
-    console.log('this.state', this.state);
+    
+    setTimeout(() => {this.setState(this.props.settleSheetDetails);},1);
+    
 
     this.handleHideSettleSheetModal = this.handleHideSettleSheetModal.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -19,6 +19,8 @@ class SettleSheetDetailsModal extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     
   }
+
+
 
   handleOnSubmit(){
     this.handleEditSettleSheetInformation();
@@ -221,6 +223,7 @@ class SettleSheetDetailsModal extends React.Component {
   }
   
   render() {
+
     return (
       <div className="componentStyle">
         <style jsx>{`
@@ -328,6 +331,8 @@ class SettleSheetDetailsModal extends React.Component {
                   />
                   <p/>
                   <SettleItButton buttonText='Submit Changes' type='submit'/>
+                  <p/>
+       
                 </div>
                 <div className="formFlexChild">
                   <p>Tickets Sold (Qty):</p>
@@ -416,10 +421,15 @@ class SettleSheetDetailsModal extends React.Component {
                     </div>
                   </div>
                   <hr/>
-                  <div>
-                    <h2 style={{margin: '0', padding: '0'}}>Venue Grand Total:</h2>
-                    <h5 style={{margin: '0', padding: '0'}}>(Income less expenses)</h5>
-                    <h2 style={{margin: '10px', padding: '0'}}> ${this.state.finalNetIncome}</h2>
+                  <div className="formFlexContainer">
+                    <div>
+                      <h2 style={{margin: '0', padding: '0'}}>Venue Grand Total:</h2>
+                      <h5 style={{margin: '0', padding: '0'}}>(Income less expenses)</h5>
+                      <h2 style={{margin: '10px', padding: '0'}}> ${this.state.finalNetIncome}</h2>
+                    </div>
+                    <div style={{paddingTop: '20px'}}>
+                      <SettleItButton type='button' buttonText="Delete This Settle Sheet"/>
+                    </div>
                   </div>
                 </div>
               </form>
