@@ -62,7 +62,7 @@ class SettleSheetStartModal extends React.Component {
           z-index: 1;
           width: 100%;
           animation-name: fadeIn;
-          animation-duration: 0.25s; 
+          animation-duration: 1s; 
           animation-timing-function: ease; 
           animation-delay: 0s;
           animation-fill-mode: both;
