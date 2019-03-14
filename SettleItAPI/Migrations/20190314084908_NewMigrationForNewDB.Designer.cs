@@ -9,8 +9,8 @@ using SettleItAPI.Models;
 namespace SettleItAPI.Migrations
 {
     [DbContext(typeof(SettleSheetContext))]
-    [Migration("20190314034223_UpdateModelToMatchFrontEnd")]
-    partial class UpdateModelToMatchFrontEnd
+    [Migration("20190314084908_NewMigrationForNewDB")]
+    partial class NewMigrationForNewDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
