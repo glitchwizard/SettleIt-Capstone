@@ -8,7 +8,11 @@ class SettleSheetDetailsModal extends React.Component {
 
   constructor(props){
     super(props);
-    this.state={};
+    this.state = {};
+
+    console.log('this.props', this.props);
+    console.log('this.state', this.state);
+
     this.handleHideSettleSheetModal = this.handleHideSettleSheetModal.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleEditSettleSheetInformation = this.handleEditSettleSheetInformation.bind(this);
@@ -59,6 +63,13 @@ class SettleSheetDetailsModal extends React.Component {
 
   handleChange(event) {
     event.preventDefault();
+
+    let eventIdName = event.target.id;
+    console.log('eventIdName; ', eventIdName);
+    
+    this.props.settleSheetDetails[eventIdName] = parseFloat(event.target.value);
+
+    console.log('this.props:\n', this.props);
     this.setState(
       {
         [event.target.id]: event.target.value}, 
@@ -336,8 +347,8 @@ class SettleSheetDetailsModal extends React.Component {
                     defaultValue={this.props.settleSheetDetails.ticketPrice}
                     ref={(ticketPrice) => {this._ticketPrice = ticketPrice;}} 
                     onChange={this.handleChange}
-                    />
-                    <p>House Cut of Door (%):</p>
+                  />
+                  <p>House Cut of Door (%):</p>
                   <input
                     type='number'
                     id='houseCutOfDoorPercentage'
