@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function SettleItButton({buttonText, onClick}) {
   return (
-    <div className="componentStyle">
+    <div className="componentStyle" onClick={onClick}>
       <style jsx>{`
         .componentStyle {
             
@@ -27,7 +27,7 @@ function SettleItButton({buttonText, onClick}) {
         }
       `}
       </style>
-      <button onClick={onClick}>{buttonText}</button>
+      <button >{buttonText}</button>
     </div>
   );
 }
