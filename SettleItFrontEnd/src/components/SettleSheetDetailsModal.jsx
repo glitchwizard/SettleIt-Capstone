@@ -31,12 +31,16 @@ class SettleSheetDetailsModal extends React.Component {
       'dateOfShow': this._dateOfShow.value,
       'headlinerBand': this._headlinerBandName.value,
       'venueName': this._venueName.value,
-      'ticketsSoldQTY': this._ticketsSoldQTY,
-      'ticketPrice': this._ticketPrice,
-      'grossBarSales': this._barSales,
-      'barSplitPercentage': this._barSplitPercentage,
-      'stageOverheadCost': this._stageOverheadCost,
-      'totalGrossIncome': this._totalGrossIncome
+
+      'barSplitPercentage': this.state.barSplitPercentage,
+      'grossBarSales': this.state.grossBarSales,
+      'grossBarSplitPayout': this.state.grossBarSplitPayout,
+      'grossTicketIncome': this.state.grossTicketIncome,
+      'stageOverheadCost': this.state.stageOverheadCost,
+      'ticketPrice': this.state.ticketPrice,
+      'ticketsSoldQTY': this.state.ticketsSoldQTY,
+      'totalGrossExpenses': this.state.totalGrossExpenses,
+      'totalGrossIncome': this.state.totalGrossIncome
     };
     const actionPayload = Object.assign( {}, initialData, updatedData);   
     dispatch(action.updateShowInfo(actionPayload));
@@ -53,18 +57,22 @@ class SettleSheetDetailsModal extends React.Component {
   handleChange(event) {
     event.preventDefault();
     this.setState(
-      {[event.target.id]: event.target.value}, 
-      () => {this.calculateNetIncome();}
+      {
+        [event.target.id]: event.target.value}, 
+      () => {
+        this.calculateNetIncome();
+        console.log('this.state \n', this.state);
+      }
     );
   }
 
   calculateNetIncome(){
-    this.calculateTotalIncome();
     this.calculateTotalExpenses();
+    this.calculateTotalIncome();
+    this.generateNetIncome();
   }
 
   calculateTotalIncome(){
-
     let totalGrossIncomeCalc = this.isGrossIncomePositive();
     let grossTicketIncome = this.calculateGrossTicketIncome();
     let grossBarSales = this.calculateGrossBarSales();
@@ -74,7 +82,7 @@ class SettleSheetDetailsModal extends React.Component {
       this.setState(
         {
           totalGrossIncome: totalGrossIncomeCalc.toFixed(2)
-        }); 
+        });
     }
   }
 
@@ -95,34 +103,21 @@ class SettleSheetDetailsModal extends React.Component {
   }
   
   calculateGrossBarSales(){
-    if (parseFloat(this.state.barSales) >= 0) {
-      let grossBarSales = (parseFloat(this.state.barSales));
+    if (parseFloat(this.state.grossBarSales) >= 0) {
+      let grossBarSales = (parseFloat(this.state.grossBarSales));
       this.setState({
         grossBarSales: grossBarSales.toFixed(2)
-      });
+      },() => this.calculateGrossBarSplitPayout());
+
       return grossBarSales;
     }
   }
 
   calculateTotalExpenses(){
-    let totalGrossExpenses;
-    let grossBarSplitPayout = 0;
-    let stageOverheadCost;
-
-    if(parseFloat(this.state.barSplitPercentage) >= 0 && parseFloat(this.state.grossBarSales) >= 0 ){
-      grossBarSplitPayout = parseFloat(this.state.grossBarSales) * (parseFloat(this.state.barSplitPercentage) / 100);
-      this.setState({
-        grossBarSplitPayout: grossBarSplitPayout.toFixed(2)
-      });
-    }
-
-    if(parseFloat(this.state.stageOverheadCost) >= 0 ){
-      stageOverheadCost = parseFloat(this.state.stageOverheadCost);
-      this.setState({
-        stageOverheadCost: stageOverheadCost.toFixed(2)
-      });
-    }
-
+    let totalGrossExpenses = this.areGrossExpensesPositive();
+    let grossBarSplitPayout = this.calculateGrossBarSplitPayout();
+    let stageOverheadCost = this.calculateStageOverheadCost();
+    
     totalGrossExpenses = grossBarSplitPayout + stageOverheadCost;
 
     if (!isNaN(totalGrossExpenses)) {
@@ -136,7 +131,41 @@ class SettleSheetDetailsModal extends React.Component {
     }
   }
 
+  areGrossExpensesPositive() {
+    if (parseFloat(this.state.totalGrossExpenses) > 0) {
+      return parseFloat(this.state.totalGrossExpenses);
+    }
+  }
 
+  calculateGrossBarSplitPayout(){
+    if (parseFloat(this.state.barSplitPercentage) >= 0 && parseFloat(this.state.grossBarSales) >= 0) {
+      let grossBarSplitPayout = parseFloat(this.state.grossBarSales) * (parseFloat(this.state.barSplitPercentage) / 100);
+      this.setState({
+        grossBarSplitPayout: grossBarSplitPayout.toFixed(2)
+      });
+      return grossBarSplitPayout;
+    }
+  }
+
+  calculateStageOverheadCost(){
+    if (parseFloat(this.state.stageOverheadCost) >= 0) {
+      let stageOverheadCost = parseFloat(this.state.stageOverheadCost);
+      this.setState({
+        stageOverheadCost: stageOverheadCost.toFixed(2)
+      });
+      return stageOverheadCost;
+    }
+  }
+
+  generateNetIncome(){
+    if (parseFloat(this.state.totalGrossExpenses) >= 0 && parseFloat(this.state.totalGrossIncome) >= 0) {
+      let finalNetIncome = parseFloat(this.state.totalGrossIncome) - (parseFloat(this.state.totalGrossExpenses));
+      this.setState({
+        finalNetIncome: finalNetIncome.toFixed(2)
+      });
+      return finalNetIncome;
+    }
+  }
   
   render() {
     return (
@@ -196,7 +225,7 @@ class SettleSheetDetailsModal extends React.Component {
         }
 
         .formFlexChild{
-
+          margin: 3px;
         }
 
         .summaryDiv{
@@ -215,29 +244,35 @@ class SettleSheetDetailsModal extends React.Component {
               <form onSubmit={this.handleOnSubmit} className="formFlexContainer">
                 <div className="formFlexChild">
                   <p></p>
+
                   <p>Venue Name:</p>
                   <input
                     type='text'
                     id='venueName'
                     defaultValue={this.props.settleSheetDetails.venueName}
-                    ref={(venueName) => { this._venueName = venueName; }} />
+                    ref={(venueName) => { this._venueName = venueName; }} 
+                  />
                   <p>Headliner:</p>
                   <input
                     type='text'
                     id='headlinerBandName'
                     placeholder='Headliner name'
                     defaultValue={this.props.settleSheetDetails.headlinerBand}
-                    ref={(headlinerBandName) => {this._headlinerBandName = headlinerBandName; }} />
+                    ref={(headlinerBandName) => {this._headlinerBandName = headlinerBandName; }} 
+                  />
                   <p> Show Date: </p>
                   <input
                     type='date'
                     id='dateOfShow'
                     defaultValue={this.props.settleSheetDetails.dateOfShow}
-                    ref={(dateOfShow) => {this._dateOfShow = dateOfShow; }} />
+                    ref={(dateOfShow) => {this._dateOfShow = dateOfShow; }} 
+                  />
                   <p></p>
                   <SettleItButton buttonText='Ok' type='submit'/>
                 </div>
+
                 <div className="formFlexChild">
+
                   <p>Tickets Sold (Qty):</p>
                   <input
                     type='number'
@@ -254,15 +289,26 @@ class SettleSheetDetailsModal extends React.Component {
                     placeholder='Ticket Price'
                     defaultValue={this.props.settleSheetDetails.ticketPrice}
                     ref={(ticketPrice) => {this._ticketPrice = ticketPrice;}} 
-                    onChange={this.handleChange} />
+                    onChange={this.handleChange} 
+                  />
+                  <p>House Cut of Door(%):</p>
+                  $<input
+                    type='number'
+                    id='houseCutOfDoor'
+                    placeholder='% cut of door'
+                    defaultValue={this.props.settleSheetDetails.houseCutOfDoor}
+                    ref={(houseCutOfDoor) => {this._ticketPrice = houseCutOfDoor;}}
+                    onChange={this.handleChange} 
+                  />
                   <p> Gross Bar Sales ($): </p>
                   $<input
                     type='number'
-                    id='barSales'
+                    id='grossBarSales'
                     placeholder='Bar Sales'
-                    defaultValue={this.props.settleSheetDetails.barSales}
-                    ref={(barSales) => {this._barSales = barSales;}} 
-                    onChange={this.handleChange} />
+                    defaultValue={this.props.settleSheetDetails.grossBarSales}
+                    ref={(grossBarSales) => {this._barSales = grossBarSales;}} 
+                    onChange={this.handleChange} 
+                  />
                   <p></p>
                   <p> Bar Split: (%)</p>
                   <input
@@ -271,7 +317,8 @@ class SettleSheetDetailsModal extends React.Component {
                     placeholder='Bar Split'
                     defaultValue={this.props.settleSheetDetails.barSplitPercentage}
                     ref={(barSplitPercentage) => {this._barSplitPercentage = barSplitPercentage;}} 
-                    onChange={this.handleChange} />
+                    onChange={this.handleChange} 
+                  />
                   <p></p>
                   <p> Stage Overhead Cost ($):</p>
                   <input
@@ -280,7 +327,8 @@ class SettleSheetDetailsModal extends React.Component {
                     placeholder='Overhead Cost'
                     defaultValue={this.props.settleSheetDetails.stageOverheadCost}
                     ref={(stageOverheadCost) => {this._stageOverheadCost = stageOverheadCost;}} 
-                    onChange={this.handleChange} />
+                    onChange={this.handleChange} 
+                  />
                   <p></p>
                 </div>
                 <div className="formFlexChild">
@@ -298,10 +346,15 @@ class SettleSheetDetailsModal extends React.Component {
                       <h3>Total Gross Expenses: ${this.state.totalGrossExpenses}</h3>
                     </div>
                   </div>
+                  <hr/>
+                  <div>
+                    <h2 style={{margin: '0', padding: '0'}}>Venue Grand Total:</h2>
+                    <h5 style={{margin: '0', padding: '0'}}>(Income less expenses)</h5>
+                    <h2 style={{margin: '10px', padding: '0'}}> ${this.state.finalNetIncome}</h2>
+                  </div>
                 </div>
               </form>
             </div>
-            {JSON.stringify(this.state)}
           </div>
         </div>
       </div>
