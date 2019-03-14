@@ -40,7 +40,8 @@ class SettleSheetDetailsModal extends React.Component {
       'ticketPrice': this.state.ticketPrice,
       'ticketsSoldQTY': this.state.ticketsSoldQTY,
       'totalGrossExpenses': this.state.totalGrossExpenses,
-      'totalGrossIncome': this.state.totalGrossIncome
+      'totalGrossIncome': this.state.totalGrossIncome,
+      'finalNetIncome': this.state.finalNetIncome
     };
     const actionPayload = Object.assign( {}, initialData, updatedData);   
     dispatch(action.updateShowInfo(actionPayload));
@@ -73,10 +74,11 @@ class SettleSheetDetailsModal extends React.Component {
 
   calculateTotalIncome(){
     let totalGrossIncomeCalc = this.isGrossIncomePositive();
-    let grossTicketIncome = this.calculateGrossTicketIncome();
+    this.calculateGrossTicketIncome();
     let grossBarSales = this.calculateGrossBarSales();
+    let monetaryHouseCutOfDoor = this.calculateHouseCutOfTicketSales();
 
-    totalGrossIncomeCalc = grossTicketIncome + grossBarSales;
+    totalGrossIncomeCalc = monetaryHouseCutOfDoor + grossBarSales;
     if (!isNaN(totalGrossIncomeCalc)) {
       this.setState(
         {
@@ -101,6 +103,16 @@ class SettleSheetDetailsModal extends React.Component {
         grossTicketIncome: grossTicketIncome.toFixed(2)
       });
       return grossTicketIncome;
+    }
+  }
+
+  calculateHouseCutOfTicketSales(){
+    if (parseFloat(this.state.houseCutOfDoorPercentage) >= 0 && parseFloat(this.state.grossTicketIncome) >= 0) {
+      let monetaryHouseCutOfDoor = parseFloat(this.state.grossTicketIncome) * (parseFloat(this.state.houseCutOfDoorPercentage)/100);
+      this.setState({
+        monetaryHouseCutOfDoor: monetaryHouseCutOfDoor.toFixed(2)
+      });
+      return monetaryHouseCutOfDoor;
     }
   }
   
@@ -291,7 +303,15 @@ class SettleSheetDetailsModal extends React.Component {
                     ref={(ticketPrice) => {this._ticketPrice = ticketPrice;}} 
                     onChange={this.handleChange}
                   />
-
+                  <p>House Cut of Door (%):</p>
+                  $<input
+                    type='number'
+                    id='houseCutOfDoorPercentage'
+                    placeholder='House cut %'
+                    defaultValue={this.props.settleSheetDetails.houseCutOfDoorPercentage}
+                    ref={(houseCutOfDoorPercentage) => {this._ticketPrice = houseCutOfDoorPercentage;}}
+                    onChange={this.handleChange}
+                  />
                   <p> Gross Bar Sales ($): </p>
                   $<input
                     type='number'
@@ -329,6 +349,7 @@ class SettleSheetDetailsModal extends React.Component {
                   <div className="formFlexContainer">
                     <div className="summaryDiv">
                       <p>Gross Ticket Income: ${this.state.grossTicketIncome}</p>
+                      <p>House Tix Cut: ${this.state.monetaryHouseCutOfDoor}</p>
                       <p>Gross Bar Income: ${this.state.grossBarSales}</p>
                       <h3>Total Gross Income: ${this.state.totalGrossIncome}</h3>
                     </div>
