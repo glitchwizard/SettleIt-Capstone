@@ -84,9 +84,6 @@ class SettleSheetDetailsModal extends React.Component {
       this.setState(
         {
           totalGrossIncome: totalGrossIncomeCalc.toFixed(2)
-        },
-        () =>{
-          this.generateNetIncome();
         });
     }
   }
@@ -102,6 +99,11 @@ class SettleSheetDetailsModal extends React.Component {
       let grossTicketIncome = parseFloat(this.state.ticketsSoldQTY) * parseFloat(this.state.ticketPrice);
       this.setState({
         grossTicketIncome: grossTicketIncome.toFixed(2)
+      },()=>{
+        this.calculateHouseCutOfTicketSales();
+        this.calculateGrossTicketSplitPayout();
+        this.calculateGrossBarSales();
+        this.calculateGrossBarSplitPayout();
       });
       return grossTicketIncome;
     }
@@ -141,8 +143,9 @@ class SettleSheetDetailsModal extends React.Component {
     let totalGrossExpenses = this.areGrossExpensesPositive();
     let grossBarSplitPayout = this.calculateGrossBarSplitPayout();
     let stageOverheadCost = this.calculateStageOverheadCost();
+    let ticketPayout = this.calculateGrossTicketSplitPayout();
     
-    totalGrossExpenses = grossBarSplitPayout + stageOverheadCost;
+    totalGrossExpenses = grossBarSplitPayout + stageOverheadCost + ticketPayout;
 
     if (!isNaN(totalGrossExpenses)) {
       this.setState(
@@ -160,6 +163,16 @@ class SettleSheetDetailsModal extends React.Component {
   areGrossExpensesPositive() {
     if (parseFloat(this.state.totalGrossExpenses) > 0) {
       return parseFloat(this.state.totalGrossExpenses);
+    }
+  }
+
+  calculateGrossTicketSplitPayout() {
+    if (parseFloat(this.state.houseCutOfDoorPercentage) >= 0 && parseFloat(this.state.grossTicketIncome) >= 0) {
+      let grossTicketSplitPayout = parseFloat(this.state.grossTicketIncome) * ( 1 -(parseFloat(this.state.houseCutOfDoorPercentage) / 100));
+      this.setState({
+        grossTicketSplitPayout: grossTicketSplitPayout.toFixed(2)
+      });
+      return grossTicketSplitPayout;
     }
   }
 
@@ -375,14 +388,14 @@ class SettleSheetDetailsModal extends React.Component {
                     <div className="summaryDiv">
                       <h3>Income</h3>
                       <hr/>
-                      <p>House Cut of Bar: ${this.state.monetaryHouseCutOfBar}</p>
                       <p>House Cut of Tix: ${this.state.monetaryHouseCutOfDoor}</p>
+                      <p>House Cut of Bar: ${this.state.monetaryHouseCutOfBar}</p>
                       <h3>Total Venue Income: ${this.state.totalGrossIncome}</h3>
                     </div>
                     <div className="summaryDiv">
                       <h3>Expenses</h3>
                       <hr />
-                      <p>Ticket payout: ${this.state.ticketPayout}</p>
+                      <p>Ticket payout: ${this.state.grossTicketSplitPayout}</p>
                       <p>Bar Payout: ${this.state.grossBarSplitPayout}</p>
                       <p>Overhead Expense: ${this.state.stageOverheadCost}</p>
                       <h3>Total Venue Expenses: ${this.state.totalGrossExpenses}</h3>
