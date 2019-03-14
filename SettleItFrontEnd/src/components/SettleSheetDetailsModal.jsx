@@ -252,20 +252,23 @@ class SettleSheetDetailsModal extends React.Component {
                     type='text'
                     id='venueName'
                     defaultValue={this.props.settleSheetDetails.venueName}
-                    ref={(venueName) => { this._venueName = venueName; }} />
+                    ref={(venueName) => { this._venueName = venueName; }}
+                  />
                   <p>Headliner:</p>
                   <input
                     type='text'
                     id='headlinerBandName'
                     placeholder='Headliner name'
                     defaultValue={this.props.settleSheetDetails.headlinerBand}
-                    ref={(headlinerBandName) => {this._headlinerBandName = headlinerBandName; }} />
+                    ref={(headlinerBandName) => {this._headlinerBandName = headlinerBandName; }}
+                  />
                   <p> Show Date: </p>
                   <input
                     type='date'
                     id='dateOfShow'
                     defaultValue={this.props.settleSheetDetails.dateOfShow}
-                    ref={(dateOfShow) => {this._dateOfShow = dateOfShow; }} />
+                    ref={(dateOfShow) => {this._dateOfShow = dateOfShow; }}
+                  />
                   <p></p>
                   <SettleItButton buttonText='Ok' type='submit'/>
                 </div>
@@ -286,7 +289,9 @@ class SettleSheetDetailsModal extends React.Component {
                     placeholder='Ticket Price'
                     defaultValue={this.props.settleSheetDetails.ticketPrice}
                     ref={(ticketPrice) => {this._ticketPrice = ticketPrice;}} 
-                    onChange={this.handleChange} />
+                    onChange={this.handleChange}
+                  />
+
                   <p> Gross Bar Sales ($): </p>
                   $<input
                     type='number'
@@ -294,7 +299,8 @@ class SettleSheetDetailsModal extends React.Component {
                     placeholder='Bar Sales'
                     defaultValue={this.props.settleSheetDetails.grossBarSales}
                     ref={(grossBarSales) => {this._barSales = grossBarSales;}} 
-                    onChange={this.handleChange} />
+                    onChange={this.handleChange}
+                  />
                   <p></p>
                   <p> Bar Split: (%)</p>
                   <input
@@ -303,7 +309,8 @@ class SettleSheetDetailsModal extends React.Component {
                     placeholder='Bar Split'
                     defaultValue={this.props.settleSheetDetails.barSplitPercentage}
                     ref={(barSplitPercentage) => {this._barSplitPercentage = barSplitPercentage;}} 
-                    onChange={this.handleChange} />
+                    onChange={this.handleChange}
+                  />
                   <p></p>
                   <p> Stage Overhead Cost ($):</p>
                   <input
@@ -312,7 +319,8 @@ class SettleSheetDetailsModal extends React.Component {
                     placeholder='Overhead Cost'
                     defaultValue={this.props.settleSheetDetails.stageOverheadCost}
                     ref={(stageOverheadCost) => {this._stageOverheadCost = stageOverheadCost;}} 
-                    onChange={this.handleChange} />
+                    onChange={this.handleChange}
+                  />
                   <p></p>
                 </div>
                 <div className="formFlexChild">
@@ -332,9 +340,9 @@ class SettleSheetDetailsModal extends React.Component {
                   </div>
                   <hr/>
                   <div>
-                    <h2 style={{margin: "0", padding: "0"}}>Venue Grand Total:</h2>
-                    <h5 style={{margin: "0", padding: "0"}}>(Income less expenses)</h5>
-                    <h2 style={{margin: "10px", padding: "0"}}> ${this.state.finalNetIncome}</h2>
+                    <h2 style={{margin: '0', padding: '0'}}>Venue Grand Total:</h2>
+                    <h5 style={{margin: '0', padding: '0'}}>(Income less expenses)</h5>
+                    <h2 style={{margin: '10px', padding: '0'}}> ${this.state.finalNetIncome}</h2>
                   </div>
                 </div>
               </form>
