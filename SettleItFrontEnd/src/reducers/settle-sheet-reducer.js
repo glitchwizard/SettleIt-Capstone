@@ -41,6 +41,10 @@ export default (state = {}, action) => {
     return Object.assign({});
   }
 
+  case actionType.DELETE_SETTLE_SHEET_FROM_LOCAL_API: {
+    return Object.assign({}, state, action.payload);
+  }
+
   default:
     return state;
   }

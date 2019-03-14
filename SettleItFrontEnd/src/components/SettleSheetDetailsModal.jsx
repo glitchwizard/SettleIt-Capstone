@@ -11,16 +11,12 @@ class SettleSheetDetailsModal extends React.Component {
     this.state = {};
     
     setTimeout(() => {this.setState(this.props.settleSheetDetails);},1);
-    
-
     this.handleHideSettleSheetModal = this.handleHideSettleSheetModal.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleEditSettleSheetInformation = this.handleEditSettleSheetInformation.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    
+    this.handleSettleSheetDeletion = this.handleSettleSheetDeletion.bind(this);
   }
-
-
 
   handleOnSubmit(){
     this.handleEditSettleSheetInformation();
@@ -60,8 +56,13 @@ class SettleSheetDetailsModal extends React.Component {
     event.preventDefault();
     dispatch(action.hideSettleSheetDetails());
     dispatch(action.clearSettleSheetDetailFromStore());
+    dispatch(action.getSettleSheetList());
   }
 
+  handleSettleSheetDeletion(IdOfSettleSheetToDelete) {
+    const {dispatch} = this.props;
+    dispatch(action.deleteSettleSheet(IdOfSettleSheetToDelete));
+  }
 
   handleChange(event) {
     event.preventDefault();
@@ -427,8 +428,10 @@ class SettleSheetDetailsModal extends React.Component {
                       <h5 style={{margin: '0', padding: '0'}}>(Income less expenses)</h5>
                       <h2 style={{margin: '10px', padding: '0'}}> ${this.state.finalNetIncome}</h2>
                     </div>
-                    <div style={{paddingTop: '20px'}}>
-                      <SettleItButton type='button' buttonText="Delete This Settle Sheet"/>
+                    <div style={{paddingTop: '20px'}} >
+                      <SettleItButton type='button' buttonText="Delete This Settle Sheet" onClick={() => 
+                        { confirm('Are you sure you want to delete this Settle Sheet?');
+                          this.handleSettleSheetDeletion(this.props.settleSheetDetails.settleSheetId)}}/>
                     </div>
                   </div>
                 </div>

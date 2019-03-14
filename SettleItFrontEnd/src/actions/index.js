@@ -113,3 +113,8 @@ export const clearSettleSheetDetailFromStore = () => ({
   type: types.CLEAR_SETTLE_SHEET_DETAIL_FROM_STORE,
   payload: {}
 });
+
+export function deleteSettleSheet(id){
+  return APItools.deleteSettleSheet(id);
+}
+
